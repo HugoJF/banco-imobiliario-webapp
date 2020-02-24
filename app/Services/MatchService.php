@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Events\PlayerJoined;
 use App\Exceptions\AlreadyInMatchException;
+use App\Exceptions\JoinedMultipleMatchesException;
 use App\Exceptions\MatchAlreadyStartedException;
 use App\Match;
 use App\User;
@@ -29,6 +31,18 @@ class MatchService
         }
 
         $match->users()->attach($user);
+        event(new PlayerJoined($user, $match));
+    }
+
+    public function current()
+    {
+        $matches = auth()->user()->matches()->where('ended_at', null)->get();
+
+        if($matches->count() > 1) {
+            throw new JoinedMultipleMatchesException();
+        }
+
+        return $matches->first();
     }
 
     /**

@@ -2,11 +2,16 @@
 
 namespace App;
 
+use App\Events\MatchUpdated;
 use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
-    protected $dates = ['started_at'];
+    protected $dispatchesEvents = [
+        'updated' => MatchUpdated::class,
+    ];
+
+    protected $dates = ['started_at', 'ended_at'];
 
     public function users()
     {

@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         // TODO: improve somehow?
-        if ($request->wantsJson() || $exception instanceof HttpException) {
+        if ($request->wantsJson() && $exception instanceof HttpException) {
             return response()
                 ->json([
                     'error' => $exception->getMessage(),
