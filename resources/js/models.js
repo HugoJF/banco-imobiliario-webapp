@@ -72,17 +72,6 @@ export const match = {
         set(state, payload) {
             return payload;
         },
-
-        /**
-         * TODO: not yet implemented
-         *
-         * @param state - current match state
-         * @param payload
-         * @returns {null}
-         */
-        leave(state, payload) {
-            return null;
-        },
     },
     effects: dispatch => ({
         /**
@@ -120,6 +109,39 @@ export const match = {
             } catch (e) {
                 console.error('Failed to join match', payload, e);
             }
-        }
-    }),
+        },
+
+        async start(payload, rootState) {
+            try {
+                let response = await axios.patch(`match/${payload}/start`);
+                if (response.data) {
+                    dispatch.match.set(response.data);
+                }
+            } catch (e) {
+                console.error('Failed to start match', payload, e);
+            }
+        },
+        async end(payload, rootState) {
+            try {
+                let response = await axios.patch(`match/${payload}/end`);
+                if (response.data) {
+                    dispatch.match.set(response.data);
+                }
+            } catch (e) {
+                console.error('Failed to end match', payload, e);
+            }
+        },
+
+        async leave(payload, rootState) {
+            try {
+                let response = await axios.delete(`match/leave`);
+                if (response.data) {
+                    dispatch.match.set(null);
+                }
+            } catch (e) {
+                console.error('Failed to leave match', payload, e);
+            }
+        },
+
+    })
 };

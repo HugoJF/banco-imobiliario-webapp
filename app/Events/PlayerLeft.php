@@ -26,12 +26,13 @@ class PlayerLeft implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param MatchUser $matchUser
+     * @param User  $user
+     * @param Match $match
      */
-    public function __construct(MatchUser $matchUser)
+    public function __construct(User $user, Match $match)
     {
-        $this->user = $matchUser->user;
-        $this->match = $matchUser->match;
+        $this->user = $user;
+        $this->match = $match;
     }
 
     /**

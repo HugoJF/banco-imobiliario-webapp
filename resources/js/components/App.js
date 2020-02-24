@@ -8,9 +8,9 @@ import PlayerTracker from "../trackers/PlayerTracker";
 
 ReactDOM.render(
     <Provider store={store}>
-        <Match>
-            <MatchTracker/>
-            <PlayerTracker/>
-        </Match>
+        <MatchTracker/>
+        <PlayerTracker/>
+
+        <Match/>
     </Provider>
     , document.getElementById('container'));

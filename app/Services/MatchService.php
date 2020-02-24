@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Events\PlayerJoined;
+use App\Events\PlayerLeft;
 use App\Exceptions\AlreadyInMatchException;
 use App\Exceptions\JoinedMultipleMatchesException;
 use App\Exceptions\MatchAlreadyStartedException;
@@ -38,7 +39,7 @@ class MatchService
     {
         $matches = auth()->user()->matches()->where('ended_at', null)->get();
 
-        if($matches->count() > 1) {
+        if ($matches->count() > 1) {
             throw new JoinedMultipleMatchesException();
         }
 
@@ -87,5 +88,28 @@ class MatchService
         }
 
         return $balances->toArray();
+    }
+
+    public function start(Match $match)
+    {
+        $match->started_at = now();
+        $match->save();
+    }
+
+    public function end(Match $match)
+    {
+        $match->ended_at = now();
+        $match->save();
+    }
+
+    public function leaveAll(User $user)
+    {
+        $matches = $user->matches()->whereNull(['started_at', 'ended_at'])->get();
+
+        foreach ($matches as $match) {
+            event(new PlayerLeft($user, $match));
+        }
+
+        $user->matches()->sync([]);
     }
 }

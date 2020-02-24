@@ -1,20 +1,22 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import useEcho from "../hooks/useEcho";
+import useMatch from "../hooks/useMatch";
 
 export default function PlayerTracker() {
     const dispatch = useDispatch();
-    const match = useSelector(state => state.match);
+    const match = useMatch();
 
     useEffect(() => {
-        dispatch.players.get(match.id);
-    }, []);
+        if(match)
+            dispatch.players.get(match.id);
+    }, [match ? match.id : null]);
 
-    useEcho(`match-${match.id}`, 'PlayerJoined', (e) => {
+    useEcho(match ? `match-${match.id}` : null, 'PlayerJoined', (e) => {
         dispatch.players.add(e.user);
     }, true);
 
-    useEcho(`match-${match.id}`, 'PlayerLeft', (e) => {
+    useEcho(match ? `match-${match.id}` : null, 'PlayerLeft', (e) => {
         dispatch.players.remove(e.user);
     }, true);
 

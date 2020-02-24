@@ -83267,7 +83267,7 @@ __webpack_require__.r(__webpack_exports__);
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
   store: _store__WEBPACK_IMPORTED_MODULE_3__["default"]
-}, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Match__WEBPACK_IMPORTED_MODULE_4__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trackers_MatchTracker__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trackers_PlayerTracker__WEBPACK_IMPORTED_MODULE_6__["default"], null))), document.getElementById('container'));
+}, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trackers_MatchTracker__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trackers_PlayerTracker__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Match__WEBPACK_IMPORTED_MODULE_4__["default"], null)), document.getElementById('container'));
 
 /***/ }),
 
@@ -83415,19 +83415,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _hooks_useMatch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useMatch */ "./resources/js/hooks/useMatch.js");
 /* harmony import */ var _hooks_usePlayers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/usePlayers */ "./resources/js/hooks/usePlayers.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 
 
 
 function MatchSummary() {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
   var match = Object(_hooks_useMatch__WEBPACK_IMPORTED_MODULE_1__["default"])();
   var players = Object(_hooks_usePlayers__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-    className: "font-normal text-gray-500 text-lg"
-  }, "Starting money: $", match.starting_money), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, players === null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading players...") : Object.values(players).map(function (player) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: player.id
-    }, player.name);
-  })));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "antialiased flex flex-col items-center m-4"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase"
+  }, "Dinheiro inicial"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+    className: "mb-4 font-normal text-center text-gray-500 text-lg"
+  }, "$", match.starting_money), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase"
+  }, "Jogadores"), players === null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading players...") : Object.values(players).map(function (player) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      key: player.id,
+      className: "w-full sm:w-1/2 md:w-1/3 xl:w-1/4 flex items-center justify-between p-4 border-l-4 border-gray-600 bg-gray-300"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "font-medium text-xl text-gray-800"
+    }, player.name));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: dispatch.match.start.bind(null, match.id),
+    className: "p-4 border border-gray-700"
+  }, "Iniciar partida"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: dispatch.match.leave.bind(null, match.id),
+    className: "p-4 border border-gray-700"
+  }, "Sair da partida")));
 }
 
 /***/ }),
@@ -83471,9 +83489,9 @@ function useEcho(channel, event, handler) {
   var handlerRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
   handlerRef.current = handler;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    Echo[publicChannel ? 'channel' : 'private'](channel).listen(event, handlerRef.current);
+    if (channel) Echo[publicChannel ? 'channel' : 'private'](channel).listen(event, handlerRef.current);
     return function () {
-      Echo.leave(channel);
+      if (channel) Echo.leave(channel);
     };
   }, [channel]);
 }
@@ -83689,17 +83707,6 @@ var match = {
      */
     set: function set(state, payload) {
       return payload;
-    },
-
-    /**
-     * TODO: not yet implemented
-     *
-     * @param state - current match state
-     * @param payload
-     * @returns {null}
-     */
-    leave: function leave(state, payload) {
-      return null;
     }
   },
   effects: function effects(dispatch) {
@@ -83790,6 +83797,114 @@ var match = {
             }
           }, _callee3, null, [[0, 7]]);
         }))();
+      },
+      start: function start(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.prev = 0;
+                  _context4.next = 3;
+                  return axios.patch("match/".concat(payload, "/start"));
+
+                case 3:
+                  response = _context4.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(response.data);
+                  }
+
+                  _context4.next = 10;
+                  break;
+
+                case 7:
+                  _context4.prev = 7;
+                  _context4.t0 = _context4["catch"](0);
+                  console.error('Failed to start match', payload, _context4.t0);
+
+                case 10:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, null, [[0, 7]]);
+        }))();
+      },
+      end: function end(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                  _context5.prev = 0;
+                  _context5.next = 3;
+                  return axios.patch("match/".concat(payload, "/end"));
+
+                case 3:
+                  response = _context5.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(response.data);
+                  }
+
+                  _context5.next = 10;
+                  break;
+
+                case 7:
+                  _context5.prev = 7;
+                  _context5.t0 = _context5["catch"](0);
+                  console.error('Failed to end match', payload, _context5.t0);
+
+                case 10:
+                case "end":
+                  return _context5.stop();
+              }
+            }
+          }, _callee5, null, [[0, 7]]);
+        }))();
+      },
+      leave: function leave(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.prev = 0;
+                  _context6.next = 3;
+                  return axios["delete"]("match/leave");
+
+                case 3:
+                  response = _context6.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(null);
+                  }
+
+                  _context6.next = 10;
+                  break;
+
+                case 7:
+                  _context6.prev = 7;
+                  _context6.t0 = _context6["catch"](0);
+                  console.error('Failed to leave match', payload, _context6.t0);
+
+                case 10:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6, null, [[0, 7]]);
+        }))();
       }
     };
   }
@@ -83836,15 +83951,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useEcho */ "./resources/js/hooks/useEcho.js");
+/* harmony import */ var _hooks_useMatch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useMatch */ "./resources/js/hooks/useMatch.js");
+
 
 
 
 function MatchTracker() {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
-  var match = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
-    return state.match;
-  });
-  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])("match-".concat(match.id), 'MatchUpdated', function (e) {
+  var match = Object(_hooks_useMatch__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])(match ? "match-".concat(match.id) : null, 'MatchUpdated', function (e) {
     dispatch.match.set(e.match);
   }, true);
   return null;
@@ -83866,21 +83981,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useEcho */ "./resources/js/hooks/useEcho.js");
+/* harmony import */ var _hooks_useMatch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useMatch */ "./resources/js/hooks/useMatch.js");
+
 
 
 
 function PlayerTracker() {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
-  var match = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(function (state) {
-    return state.match;
-  });
+  var match = Object(_hooks_useMatch__WEBPACK_IMPORTED_MODULE_3__["default"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch.players.get(match.id);
-  }, []);
-  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])("match-".concat(match.id), 'PlayerJoined', function (e) {
+    if (match) dispatch.players.get(match.id);
+  }, [match ? match.id : null]);
+  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])(match ? "match-".concat(match.id) : null, 'PlayerJoined', function (e) {
     dispatch.players.add(e.user);
   }, true);
-  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])("match-".concat(match.id), 'PlayerLeft', function (e) {
+  Object(_hooks_useEcho__WEBPACK_IMPORTED_MODULE_2__["default"])(match ? "match-".concat(match.id) : null, 'PlayerLeft', function (e) {
     dispatch.players.remove(e.user);
   }, true);
   return null;

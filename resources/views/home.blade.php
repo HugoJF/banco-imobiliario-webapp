@@ -14,8 +14,6 @@
                         </div>
                     @endif
 
-                    You are logged in!
-
                     <div id="container"></div>
                 </div>
             </div>

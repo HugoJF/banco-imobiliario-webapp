@@ -19,15 +19,18 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('match')->group(function () {
         Route::get('search', 'MatchController@search')->name('match.search');
         Route::get('{match}/players', 'MatchController@players')->name('match.players');
-       Route::post('{match}/join', 'MatchController@join')->name('match.join');
+        Route::post('{match}/join', 'MatchController@join')->name('match.join');
+        Route::patch('{match}/start', 'MatchController@start')->name('match.start');
+        Route::patch('{match}/end', 'MatchController@end')->name('match.end');
+        Route::delete('leave', 'MatchController@leave')->name('match.leave');
     });
 });
 
 Route::get('ex', function () {
-   throw new \App\Exceptions\AlreadyInMatchException();
+    throw new \App\Exceptions\AlreadyInMatchException();
 });
 
 Route::get('/event', function () {
-//    event(new \App\Events\TestEvent('oi'));
+    //    event(new \App\Events\TestEvent('oi'));
     event(new \App\Events\TurnUpdate(5239));
 });
