@@ -78997,8 +78997,8 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/banco-imobiliario-webapp/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/banco-imobiliario-webapp/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/banco-imobiliario-webapp/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/banco-imobiliario-webapp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

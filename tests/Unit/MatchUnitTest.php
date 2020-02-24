@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class MatchTest extends TestCase
+class MatchUnitTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
@@ -120,9 +120,9 @@ class MatchTest extends TestCase
         /** @var MatchService $service */
         $service = app(MatchService::class);
 
-        // TODO: HTTP 409
         $this->expectException(AlreadyInMatchException::class);
 
+        $service->join($user, $match);
         $service->join($user, $match);
 
         $this->assertDatabaseHas('match_user', [

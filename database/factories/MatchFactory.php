@@ -11,6 +11,12 @@ $factory->define(Match::class, function (Faker $faker) {
     ];
 });
 
+$factory->state(Match::class, 'open', function (Faker $faker) {
+    return [
+        'started_at' => null,
+    ];
+});
+
 $factory->state(Match::class, 'started', function (Faker $faker) {
     return [
         'started_at' => $faker->dateTimeBetween(),
