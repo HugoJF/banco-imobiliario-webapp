@@ -93,6 +93,29 @@ export const match = {
             }
         },
 
+        async createAndJoin(payload, rootState) {
+            try {
+                await dispatch.match.create();
+                await dispatch.match.join(rootState.match.id);
+            } catch (e) {
+                console.error('Error while trying to create and join a match', e);
+            }
+        },
+
+        async create(payload, rootState) {
+            try {
+                let response = await axios.post('match/create');
+
+                if (response.data) {
+                    dispatch.match.set(response.data);
+                }
+
+                dispatch.match.join(response.data.id);
+            } catch (e) {
+                console.error('Error while trying to create and join a match', e);
+            }
+        },
+
         /**
          * Attempts to join match by ID
          *

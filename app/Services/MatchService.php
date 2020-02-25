@@ -46,6 +46,15 @@ class MatchService
         return $matches->first();
     }
 
+    public function create()
+    {
+        $match = new Match();
+        $match->starting_money = 100000; // TODO: improve this
+        $match->save();
+
+        return $match;
+    }
+
     /**
      * @param Match $match
      * @param null  $ids
