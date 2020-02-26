@@ -83271,6 +83271,111 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 
 /***/ }),
 
+/***/ "./resources/js/components/ColorButton.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/ColorButton.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ColorButton; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _svg_Check__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./svg/Check */ "./resources/js/components/svg/Check.js");
+
+ // We need the entire class name here so PurgeCSS can look them up and keep in the final purged file.
+// So I cannot use a template to only replace the color name!
+
+var bgColor = {
+  blue: 'bg-blue-600',
+  red: 'bg-red-600',
+  green: 'bg-green-600',
+  yellow: 'bg-yellow-600',
+  gray: 'bg-gray-600',
+  purple: 'bg-purple-600'
+};
+var tColor = {
+  blue: 'text-blue-900',
+  red: 'text-red-900',
+  green: 'text-green-900',
+  yellow: 'text-yellow-900',
+  gray: 'text-gray-900',
+  purple: 'text-purple-900'
+};
+var bColor = {
+  blue: 'border-blue-800',
+  red: 'border-red-800',
+  green: 'border-green-800',
+  yellow: 'border-yellow-800',
+  gray: 'border-gray-800',
+  purple: 'border-purple-800'
+};
+function ColorButton(_ref) {
+  var color = _ref.color,
+      onSelect = _ref.onSelect,
+      selected = _ref.selected;
+  var textColor = tColor[color];
+  var backgroundColor = bgColor[color];
+  var border = selected ? 'border-2 border-b-0' : '';
+  var borderColor = selected ? bColor[color] : '';
+  var shadow = selected ? 'shadow-underline' : 'shadow-underline-none';
+  var translate = selected ? '-translate-y-10px' : '';
+  var hover = selected ? '' : 'hover:-translate-y-1 hover:shadow';
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    onClick: onSelect,
+    className: "\n            transform flex items-center justify-center\n            transition-all duration-150 ease-out\n            m-4 w-24 h-24 ".concat(textColor, " ").concat(backgroundColor, " ").concat(border, " ").concat(borderColor, " cursor-pointer rounded-lg ").concat(shadow, " ").concat(translate, "\n            ").concat(hover)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "w-10 h-10"
+  }, selected && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_Check__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/ColorSelector.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/ColorSelector.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ColorSelector; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ColorButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ColorButton */ "./resources/js/components/ColorButton.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var colors = ['blue', 'red', 'green', 'yellow', 'gray', 'purple'];
+function ColorSelector() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      selected = _useState2[0],
+      setSelected = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "antialiased flex flex-wrap justify-center m-4"
+  }, colors.map(function (color) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ColorButton__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      onSelect: setSelected.bind(null, color),
+      selected: color === selected,
+      color: color
+    });
+  }));
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/Match.js":
 /*!******************************************!*\
   !*** ./resources/js/components/Match.js ***!
@@ -83289,6 +83394,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_useAsync__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useAsync */ "./resources/js/hooks/useAsync.js");
 /* harmony import */ var _MatchJoin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MatchJoin */ "./resources/js/components/MatchJoin.js");
 /* harmony import */ var _MatchSummary__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MatchSummary */ "./resources/js/components/MatchSummary.js");
+/* harmony import */ var _hooks_useMatch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hooks/useMatch */ "./resources/js/hooks/useMatch.js");
+/* harmony import */ var _ui_Loading__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui/Loading */ "./resources/js/components/ui/Loading.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -83308,6 +83415,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 function Match(_ref) {
   var children = _ref.children;
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
@@ -83317,9 +83426,7 @@ function Match(_ref) {
       loading = _useState2[0],
       setLoading = _useState2[1];
 
-  var match = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(function (state) {
-    return state.match;
-  }); // TODO: if this component is rendered a second time, setLoading will lose its reference!
+  var match = Object(_hooks_useMatch__WEBPACK_IMPORTED_MODULE_6__["default"])(); // TODO: if this component is rendered a second time, setLoading will lose its reference!
 
   Object(_hooks_useAsync__WEBPACK_IMPORTED_MODULE_3__["default"])(
   /*#__PURE__*/
@@ -83345,7 +83452,7 @@ function Match(_ref) {
   })));
 
   if (loading) {
-    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Verificando se voc\xEA j\xE1 est\xE1 em uma partida...");
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_ui_Loading__WEBPACK_IMPORTED_MODULE_7__["default"], null, "Verificando se voc\xEA j\xE1 est\xE1 em uma partida...");
   }
 
   if (!match) {
@@ -83360,7 +83467,7 @@ function Match(_ref) {
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "partida iniciada");
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, children, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_MatchSummary__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_MatchSummary__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 }
 
 /***/ }),
@@ -83384,7 +83491,9 @@ function MatchJoin() {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
 
   function handleOnSubmit(e) {
-    dispatch.match.join(e.target.value);
+    if (e.key === 'Enter') {
+      dispatch.match.join(e.target.value);
+    }
   }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83416,6 +83525,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_useMatch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useMatch */ "./resources/js/hooks/useMatch.js");
 /* harmony import */ var _hooks_usePlayers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/usePlayers */ "./resources/js/hooks/usePlayers.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _ui_Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/Loading */ "./resources/js/components/ui/Loading.js");
+/* harmony import */ var _ColorSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ColorSelector */ "./resources/js/components/ColorSelector.js");
+/* harmony import */ var _ui_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/Button */ "./resources/js/components/ui/Button.js");
+
+
+
 
 
 
@@ -83432,20 +83547,113 @@ function MatchSummary() {
     className: "mb-4 font-normal text-center text-gray-500 text-lg"
   }, "$", match.starting_money), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase"
-  }, "Jogadores"), players === null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading players...") : Object.values(players).map(function (player) {
+  }, "Jogadores"), players === null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null, "Carregando informa\xE7\xE3o dos jogadores...") : Object.values(players).map(function (player) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: player.id,
       className: "w-full sm:w-1/2 md:w-1/3 xl:w-1/4 flex items-center justify-between p-4 border-l-4 border-gray-600 bg-gray-300"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "font-medium text-xl text-gray-800"
     }, player.name));
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: dispatch.match.start.bind(null, match.id),
-    className: "p-4 border border-gray-700"
-  }, "Iniciar partida"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: dispatch.match.leave.bind(null, match.id),
-    className: "p-4 border border-gray-700"
-  }, "Sair da partida")));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ColorSelector__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "antialiased flex justify-center items-center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    color: "green",
+    onClick: dispatch.match.start.bind(null, match.id)
+  }, "Iniciar partida"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_Button__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    color: "red",
+    onClick: dispatch.match.leave.bind(null, match.id)
+  }, "Sair da partida"))));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/svg/Check.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/svg/Check.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Check; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Check() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    viewBox: "0 0 512 512",
+    className: "transition-none fill-current"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M437.019,74.98C388.667,26.629,324.38,0,256,0C187.619,0,123.331,26.629,74.98,74.98C26.628,123.332,0,187.62,0,256 s26.628,132.667,74.98,181.019C123.332,485.371,187.619,512,256,512c68.38,0,132.667-26.629,181.019-74.981 C485.371,388.667,512,324.38,512,256S485.371,123.333,437.019,74.98z M256,482C131.383,482,30,380.617,30,256S131.383,30,256,30 s226,101.383,226,226S380.617,482,256,482z"
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M378.305,173.859c-5.857-5.856-15.355-5.856-21.212,0.001L224.634,306.319l-69.727-69.727 c-5.857-5.857-15.355-5.857-21.213,0c-5.858,5.857-5.858,15.355,0,21.213l80.333,80.333c2.929,2.929,6.768,4.393,10.606,4.393 c3.838,0,7.678-1.465,10.606-4.393l143.066-143.066C384.163,189.215,384.163,179.717,378.305,173.859z"
+  }))));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/ui/Button.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/ui/Button.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Button; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+ // We need the entire class name here so PurgeCSS can look them up and keep in the final purged file.
+// So I cannot use a template to only replace the color name!
+
+var bgColorBase = {
+  red: 'bg-red-600',
+  green: 'bg-green-600'
+};
+var bgColorBaseHover = {
+  red: 'hover:bg-red-700',
+  green: 'hover:bg-green-700'
+};
+function Button(_ref) {
+  var color = _ref.color,
+      children = _ref.children,
+      rest = _objectWithoutProperties(_ref, ["color", "children"]);
+
+  var backgroundColor = bgColorBase[color];
+  var backgroundColorHover = bgColorBaseHover[color];
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", _extends({}, rest, {
+    className: "\n        mr-2 px-5 py-4\n        font-bold text-white\n        ".concat(backgroundColor, " ").concat(backgroundColorHover, "\n        cursor-pointer rounded-lg\n    ")
+  }), children);
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/ui/Loading.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ui/Loading.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Loading; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Loading(_ref) {
+  var children = _ref.children;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "text-center"
+  }, children);
 }
 
 /***/ }),

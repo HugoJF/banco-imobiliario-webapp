@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import useAsync from "../hooks/useAsync";
 import MatchJoin from "./MatchJoin";
 import MatchSummary from "./MatchSummary";
+import useMatch from "../hooks/useMatch";
+import Loading from "./ui/Loading";
 
 export default function Match({children}) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const match = useSelector(state => state.match);
+    const match = useMatch();
 
     // TODO: if this component is rendered a second time, setLoading will lose its reference!
     useAsync(async () => {
@@ -16,7 +18,7 @@ export default function Match({children}) {
     });
 
     if (loading) {
-        return <p>Verificando se você já está em uma partida...</p>
+        return <Loading>Verificando se você já está em uma partida...</Loading>
     }
 
     if (!match) {
@@ -31,8 +33,5 @@ export default function Match({children}) {
         return <p>partida iniciada</p>
     }
 
-    return <>
-        {children}
-        <MatchSummary/>
-    </>
+    return <MatchSummary/>
 }

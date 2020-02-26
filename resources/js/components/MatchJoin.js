@@ -5,7 +5,9 @@ export default function MatchJoin() {
     const dispatch = useDispatch();
 
     function handleOnSubmit(e) {
-        dispatch.match.join(e.target.value);
+        if (e.key === 'Enter') {
+            dispatch.match.join(e.target.value);
+        }
     }
 
     return <>

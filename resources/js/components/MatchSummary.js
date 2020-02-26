@@ -2,6 +2,9 @@ import React from 'react';
 import useMatch from "../hooks/useMatch";
 import usePlayers from "../hooks/usePlayers";
 import {useDispatch} from "react-redux";
+import Loading from "./ui/Loading";
+import ColorSelector from "./ColorSelector";
+import Button from "./ui/Button";
 
 export default function MatchSummary() {
     const dispatch = useDispatch();
@@ -19,7 +22,7 @@ export default function MatchSummary() {
             {
                 players === null
                     ?
-                    <p>Loading players...</p>
+                    <Loading>Carregando informação dos jogadores...</Loading>
                     :
                     Object.values(players).map((player) => (
                         <div key={player.id} className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 flex items-center justify-between p-4 border-l-4 border-gray-600 bg-gray-300">
@@ -30,9 +33,13 @@ export default function MatchSummary() {
                     ))
             }
 
-            <button onClick={dispatch.match.start.bind(null, match.id)} className="p-4 border border-gray-700">Iniciar partida</button>
+            <ColorSelector/>
 
-            <button onClick={dispatch.match.leave.bind(null, match.id)} className="p-4 border border-gray-700">Sair da partida</button>
+
+            <div className="antialiased flex justify-center items-center">
+                <Button color="green" onClick={dispatch.match.start.bind(null, match.id)}>Iniciar partida</Button>
+                <Button color="red" onClick={dispatch.match.leave.bind(null, match.id)}>Sair da partida</Button>
+            </div>
         </div>
     </>
 }

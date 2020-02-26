@@ -27,6 +27,7 @@
     "dependencies": {
         "@rematch/core": "^1.4.0",
         "@rematch/immer": "^1.2.0",
+        "autoprefixer": "^9.7.4",
         "laravel-echo": "^1.6.1",
         "pusher-js": "^5.1.1",
         "react": "^16.12.0",

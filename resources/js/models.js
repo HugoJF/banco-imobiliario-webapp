@@ -121,6 +121,7 @@ export const match = {
                 console.error('Failed to start match', payload, e);
             }
         },
+
         async end(payload, rootState) {
             try {
                 let response = await axios.patch(`match/${payload}/end`);
@@ -142,6 +143,5 @@ export const match = {
                 console.error('Failed to leave match', payload, e);
             }
         },
-
     })
 };
