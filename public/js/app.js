@@ -83485,6 +83485,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _ui_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui/Button */ "./resources/js/components/ui/Button.js");
+
 
 
 function MatchJoin() {
@@ -83496,16 +83498,22 @@ function MatchJoin() {
     }
   }
 
+  function handleOnCreate(e) {
+    dispatch.match.createAndJoin();
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "antialiased flex flex-col items-center m-4"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase"
   }, "C\xF3digo da partida"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    onKeyDown: handleOnSubmit,
+    onKeyUp: handleOnSubmit,
     className: " w-24 py-1 bg-transparent focus:bg-gray-800 font-mono text-center text-xl text-gray-800 placeholder-gray-800 focus:text-gray-100 border border-gray-900 tracking-wider rounded outline-none",
     type: "text",
     placeholder: "****"
-  })));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onClick: handleOnCreate
+  }, "Criar partida")));
 }
 
 /***/ }),
@@ -83962,6 +83970,76 @@ var match = {
           }, _callee2, null, [[0, 7]]);
         }))();
       },
+      createAndJoin: function createAndJoin(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  _context3.prev = 0;
+                  _context3.next = 3;
+                  return dispatch.match.create();
+
+                case 3:
+                  _context3.next = 5;
+                  return dispatch.match.join(rootState.match.id);
+
+                case 5:
+                  _context3.next = 10;
+                  break;
+
+                case 7:
+                  _context3.prev = 7;
+                  _context3.t0 = _context3["catch"](0);
+                  console.error('Error while trying to create and join a match', _context3.t0);
+
+                case 10:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3, null, [[0, 7]]);
+        }))();
+      },
+      create: function create(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.prev = 0;
+                  _context4.next = 3;
+                  return axios.post('match/create');
+
+                case 3:
+                  response = _context4.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(response.data);
+                  }
+
+                  dispatch.match.join(response.data.id);
+                  _context4.next = 11;
+                  break;
+
+                case 8:
+                  _context4.prev = 8;
+                  _context4.t0 = _context4["catch"](0);
+                  console.error('Error while trying to create and join a match', _context4.t0);
+
+                case 11:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, null, [[0, 8]]);
+        }))();
+      },
 
       /**
        * Attempts to join match by ID
@@ -83973,78 +84051,6 @@ var match = {
       join: function join(payload, rootState) {
         return _asyncToGenerator(
         /*#__PURE__*/
-        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          var response;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.prev = 0;
-                  _context3.next = 3;
-                  return axios.post("match/".concat(payload, "/join"));
-
-                case 3:
-                  response = _context3.sent;
-
-                  if (response.data) {
-                    dispatch.match.set(response.data);
-                  }
-
-                  _context3.next = 10;
-                  break;
-
-                case 7:
-                  _context3.prev = 7;
-                  _context3.t0 = _context3["catch"](0);
-                  console.error('Failed to join match', payload, _context3.t0);
-
-                case 10:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3, null, [[0, 7]]);
-        }))();
-      },
-      start: function start(payload, rootState) {
-        return _asyncToGenerator(
-        /*#__PURE__*/
-        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var response;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.prev = 0;
-                  _context4.next = 3;
-                  return axios.patch("match/".concat(payload, "/start"));
-
-                case 3:
-                  response = _context4.sent;
-
-                  if (response.data) {
-                    dispatch.match.set(response.data);
-                  }
-
-                  _context4.next = 10;
-                  break;
-
-                case 7:
-                  _context4.prev = 7;
-                  _context4.t0 = _context4["catch"](0);
-                  console.error('Failed to start match', payload, _context4.t0);
-
-                case 10:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4, null, [[0, 7]]);
-        }))();
-      },
-      end: function end(payload, rootState) {
-        return _asyncToGenerator(
-        /*#__PURE__*/
         _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
           var response;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -84053,7 +84059,7 @@ var match = {
                 case 0:
                   _context5.prev = 0;
                   _context5.next = 3;
-                  return axios.patch("match/".concat(payload, "/end"));
+                  return axios.post("match/".concat(payload, "/join"));
 
                 case 3:
                   response = _context5.sent;
@@ -84068,7 +84074,7 @@ var match = {
                 case 7:
                   _context5.prev = 7;
                   _context5.t0 = _context5["catch"](0);
-                  console.error('Failed to end match', payload, _context5.t0);
+                  console.error('Failed to join match', payload, _context5.t0);
 
                 case 10:
                 case "end":
@@ -84078,7 +84084,7 @@ var match = {
           }, _callee5, null, [[0, 7]]);
         }))();
       },
-      leave: function leave(payload, rootState) {
+      start: function start(payload, rootState) {
         return _asyncToGenerator(
         /*#__PURE__*/
         _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
@@ -84089,13 +84095,13 @@ var match = {
                 case 0:
                   _context6.prev = 0;
                   _context6.next = 3;
-                  return axios["delete"]("match/leave");
+                  return axios.patch("match/".concat(payload, "/start"));
 
                 case 3:
                   response = _context6.sent;
 
                   if (response.data) {
-                    dispatch.match.set(null);
+                    dispatch.match.set(response.data);
                   }
 
                   _context6.next = 10;
@@ -84104,7 +84110,7 @@ var match = {
                 case 7:
                   _context6.prev = 7;
                   _context6.t0 = _context6["catch"](0);
-                  console.error('Failed to leave match', payload, _context6.t0);
+                  console.error('Failed to start match', payload, _context6.t0);
 
                 case 10:
                 case "end":
@@ -84112,6 +84118,78 @@ var match = {
               }
             }
           }, _callee6, null, [[0, 7]]);
+        }))();
+      },
+      end: function end(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  _context7.prev = 0;
+                  _context7.next = 3;
+                  return axios.patch("match/".concat(payload, "/end"));
+
+                case 3:
+                  response = _context7.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(response.data);
+                  }
+
+                  _context7.next = 10;
+                  break;
+
+                case 7:
+                  _context7.prev = 7;
+                  _context7.t0 = _context7["catch"](0);
+                  console.error('Failed to end match', payload, _context7.t0);
+
+                case 10:
+                case "end":
+                  return _context7.stop();
+              }
+            }
+          }, _callee7, null, [[0, 7]]);
+        }))();
+      },
+      leave: function leave(payload, rootState) {
+        return _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+          var response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+            while (1) {
+              switch (_context8.prev = _context8.next) {
+                case 0:
+                  _context8.prev = 0;
+                  _context8.next = 3;
+                  return axios["delete"]("match/leave");
+
+                case 3:
+                  response = _context8.sent;
+
+                  if (response.data) {
+                    dispatch.match.set(null);
+                  }
+
+                  _context8.next = 10;
+                  break;
+
+                case 7:
+                  _context8.prev = 7;
+                  _context8.t0 = _context8["catch"](0);
+                  console.error('Failed to leave match', payload, _context8.t0);
+
+                case 10:
+                case "end":
+                  return _context8.stop();
+              }
+            }
+          }, _callee8, null, [[0, 7]]);
         }))();
       }
     };

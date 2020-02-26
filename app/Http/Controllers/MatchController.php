@@ -25,6 +25,13 @@ class MatchController extends Controller
         return response()->json($match)->setStatusCode(201);
     }
 
+    public function create(MatchService $service, Match $match)
+    {
+        $match = $service->create();
+
+        return $match;
+    }
+
     public function start(MatchService $service, Match $match)
     {
         $service->start($match);

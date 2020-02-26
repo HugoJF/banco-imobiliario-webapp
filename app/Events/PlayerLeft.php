@@ -44,4 +44,9 @@ class PlayerLeft implements ShouldBroadcast
     {
         return ["match-{$this->match->id}"];
     }
+
+    public function getMatch()
+    {
+        return $this->match;
+    }
 }
