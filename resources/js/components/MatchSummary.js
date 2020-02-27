@@ -1,40 +1,58 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import useMatch from "../hooks/useMatch";
 import usePlayers from "../hooks/usePlayers";
 import {useDispatch} from "react-redux";
 import Loading from "./ui/Loading";
 import ColorSelector from "./ColorSelector";
 import Button from "./ui/Button";
+import Title from "./ui/Title";
+import PlayerList from "./PlayerList";
+import useMe from "../hooks/useMe";
 
 export default function MatchSummary() {
     const dispatch = useDispatch();
+    const me = useMe();
     const match = useMatch();
     const players = usePlayers();
+    const [selectedUser, setSelectedUser] = useState(me);
+
+    useEffect(() => {
+        // TODO: 1?
+        dispatch.balances.get(1);
+    }, []);
+
+    function handleColorSelection(color) {
+        dispatch.players.edit({
+            id: selectedUser,
+            data: {color: color},
+        })
+    }
+
+    function handlePlayerSelection(player) {
+        setSelectedUser(player.id);
+    }
 
     return <>
         <div className="antialiased flex flex-col items-center m-4">
-            <h3 className="mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase">Dinheiro inicial</h3>
+            <Title>Dinheiro inicial</Title>
 
             <h4 className="mb-4 font-normal text-center text-gray-500 text-lg">${match.starting_money}</h4>
 
-            <h3 className="mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase">Jogadores</h3>
+            <Title>Jogadores</Title>
 
             {
                 players === null
                     ?
-                    <Loading>Carregando informação dos jogadores...</Loading>
+                    <Loading>chateando o mundo</Loading>
                     :
-                    Object.values(players).map((player) => (
-                        <div key={player.id} className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 flex items-center justify-between p-4 border-l-4 border-gray-600 bg-gray-300">
-                            <div className="font-medium text-xl text-gray-800">
-                                {player.name}
-                            </div>
-                        </div>
-                    ))
+                    <PlayerList onSelect={handlePlayerSelection} initialSelect={me} players={Object.values(players)}/>
             }
 
-            <ColorSelector/>
+            <Title>Selecione a sua cor</Title>
 
+            <ColorSelector forceSelect={players[selectedUser].color} onSelect={handleColorSelection}/>
+
+            <Title/>
 
             <div className="antialiased flex justify-center items-center">
                 <Button color="green" onClick={dispatch.match.start.bind(null, match.id)}>Iniciar partida</Button>

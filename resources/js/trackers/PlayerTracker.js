@@ -20,5 +20,9 @@ export default function PlayerTracker() {
         dispatch.players.remove(e.user);
     }, true);
 
+    useEcho('users', 'UserUpdated', (e) => {
+        dispatch.players.update(e.user);
+    }, true);
+
     return null;
 }

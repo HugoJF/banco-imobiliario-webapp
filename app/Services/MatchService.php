@@ -5,9 +5,11 @@ namespace App\Services;
 use App\Events\PlayerJoined;
 use App\Events\PlayerLeft;
 use App\Exceptions\AlreadyInMatchException;
+use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\JoinedMultipleMatchesException;
 use App\Exceptions\MatchAlreadyStartedException;
 use App\Match;
+use App\Transaction;
 use App\User;
 use Illuminate\Support\Collection;
 
@@ -101,6 +103,20 @@ class MatchService
 
     public function start(Match $match)
     {
+        // Clear any existing transactions
+        $match->transactions()->delete();
+
+        // Generate starting money for each player
+        foreach ($match->users as $user) {
+            $transaction = new Transaction();
+
+            $transaction->origin_id = null; // bank
+            $transaction->destination_id = $user->id;
+            $transaction->value = $match->starting_money;
+
+            $match->transactions()->save($transaction);
+        }
+
         $match->started_at = now();
         $match->save();
     }
@@ -120,5 +136,30 @@ class MatchService
         }
 
         $user->matches()->sync([]);
+    }
+
+    public function createTransaction(Match $match, array $data)
+    {
+        /** @var MatchService $matchService */
+        $matchService = app(MatchService::class);
+
+        $originId = $data['origin_id'];
+        $destinationId = $data['destination_id'];
+        $value = $data['value'];
+
+        $balances = $matchService->calculateBalances($match, [$originId]);
+
+        // Check if origin user has enough balance to generate transaction
+        if ($balances[ $originId ] < $value) {
+            throw new InsufficientBalanceException();
+        }
+
+        $transaction = new Transaction();
+
+        $transaction->fill($data);
+
+        $match->transactions()->save($transaction);
+
+        return $transaction;
     }
 }

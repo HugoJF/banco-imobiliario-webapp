@@ -1,3 +1,25 @@
+export const me = {
+    state: 0,
+    reducers: {
+        set(state, payload) {
+            state = payload;
+            console.log(payload);
+            return state;
+        },
+    },
+    effects: dispatch => ({
+        async get(payload, rootState) {
+            try {
+                let response = await axios.get(`me`);
+                dispatch.me.set(response.data);
+                await dispatch.players.getById(response.data);
+            } catch (e) {
+                console.error('Error while fetching own information', e);
+            }
+        },
+    }),
+};
+
 export const players = {
     state: null, // null is basically unloaded
     reducers: {
@@ -15,6 +37,17 @@ export const players = {
             }
 
             state[payload.id] = payload;
+            return state;
+        },
+        update(state, payload) {
+            if (state === null) {
+                return state;
+            }
+
+            if (state[payload.id]) {
+                state[payload.id] = payload;
+            }
+
             return state;
         },
         /**
@@ -51,6 +84,58 @@ export const players = {
                     for (let player of response.data) {
                         dispatch.players.add(player);
                     }
+                }
+            } catch (e) {
+                console.error('Error while fetching players from match', e);
+            }
+        },
+        async edit(payload, rootState) {
+            try {
+                let response = await axios.patch(`users/${payload.id}`, payload.data);
+
+                if (response.data) {
+                    dispatch.players.update(response.data);
+                }
+            } catch (e) {
+                console.log('Error fetching user', e);
+            }
+        },
+        async getById(payload, rootState) {
+            try {
+                let response = await axios.get(`users/${payload}`);
+
+                if (response.data) {
+                    dispatch.players.add(response.data);
+                }
+            } catch (e) {
+                console.log('Error fetching user', e);
+            }
+        }
+    }),
+};
+
+export const balances = {
+    state: {}, // null is basically unloaded
+    reducers: {
+        update(state, payload) {
+            let balances = Object
+                .entries(payload)
+                .map((b) => ({id: b[0], balance: b[1]}));
+
+            for (let balance of balances) {
+                state[balance.id] = balance.balance;
+            }
+
+            return state;
+        },
+    },
+    effects: dispatch => ({
+        async get(payload, rootState) {
+            try {
+                let response = await axios.get(`match/${payload}/balances`);
+
+                if (response.data) {
+                    dispatch.balances.update(response.data);
                 }
             } catch (e) {
                 console.error('Error while fetching players from match', e);

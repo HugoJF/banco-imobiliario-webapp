@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
 import Button from "./ui/Button";
+import Title from "./ui/Title";
 
 export default function MatchJoin() {
     const dispatch = useDispatch();
@@ -17,10 +18,10 @@ export default function MatchJoin() {
 
     return <>
         <div className="antialiased flex flex-col items-center m-4">
-            <h3 className="mb-4 font-medium text-gray-700 text-xl tracking-wide uppercase">Código da partida</h3>
+            <Title>Código da partida</Title>
 
             <input onKeyUp={handleOnSubmit} className="
-              w-24 py-1
+              m-4 w-24 py-1
               bg-transparent focus:bg-gray-800
               font-mono
               text-center text-xl text-gray-800 placeholder-gray-800 focus:text-gray-100

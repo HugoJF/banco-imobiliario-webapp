@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
 use App\Match;
 use App\Services\MatchService;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class MatchController extends Controller
@@ -16,6 +18,11 @@ class MatchController extends Controller
     public function players(Match $match)
     {
         return $match->users;
+    }
+
+    public function balances(MatchService $service, Match $match)
+    {
+        return $service->calculateBalances($match);
     }
 
     public function join(MatchService $service, Match $match)
@@ -37,6 +44,11 @@ class MatchController extends Controller
         $service->start($match);
 
         return $match;
+    }
+
+    public function transaction(MatchService $service, TransactionRequest $request, Match $match)
+    {
+        return $service->createTransaction($match, $request->all());
     }
 
     public function end(MatchService $service, Match $match)

@@ -5,6 +5,7 @@ import MatchJoin from "./MatchJoin";
 import MatchSummary from "./MatchSummary";
 import useMatch from "../hooks/useMatch";
 import Loading from "./ui/Loading";
+import MatchPanel from "./MatchPanel";
 
 export default function Match({children}) {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function Match({children}) {
 
     // TODO: if this component is rendered a second time, setLoading will lose its reference!
     useAsync(async () => {
+        await dispatch.me.get();
         await dispatch.match.search();
         setLoading(false);
     });
@@ -30,7 +32,7 @@ export default function Match({children}) {
     }
 
     if (match.started_at) {
-        return <p>partida iniciada</p>
+        return <MatchPanel/>
     }
 
     return <MatchSummary/>
