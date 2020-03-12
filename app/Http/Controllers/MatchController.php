@@ -25,6 +25,11 @@ class MatchController extends Controller
         return $service->calculateBalances($match);
     }
 
+    public function transactions(Match $match)
+    {
+        return $match->transactions;
+    }
+
     public function join(MatchService $service, Match $match)
     {
         $service->join(auth()->user(), $match);
@@ -56,6 +61,16 @@ class MatchController extends Controller
         $service->end($match);
 
         return $match;
+    }
+
+    public function next(MatchService $service, Match $match)
+    {
+        return $service->nextTurn($match);
+    }
+
+    public function update(MatchService $service, Request $request, Match $match)
+    {
+        return $service->update($match, $request->all());
     }
 
     public function leave(MatchService $service)

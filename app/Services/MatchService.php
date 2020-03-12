@@ -147,10 +147,10 @@ class MatchService
         $destinationId = $data['destination_id'];
         $value = $data['value'];
 
-        $balances = $matchService->calculateBalances($match, [$originId]);
+        $balances = $matchService->calculateBalances($match, [$originId, $destinationId]);
 
         // Check if origin user has enough balance to generate transaction
-        if ($balances[ $originId ] < $value) {
+        if ($originId !== null && $balances[ $originId ] < $value) {
             throw new InsufficientBalanceException();
         }
 
@@ -161,5 +161,21 @@ class MatchService
         $match->transactions()->save($transaction);
 
         return $transaction;
+    }
+
+	public function nextTurn(Match $match)
+	{
+	    $match->turn = $match->turn + 1;
+	    $match->save();
+
+	    return $match;
+	}
+
+    public function update(Match $match, array $data)
+    {
+        $match->fill($data);
+        $match->save();
+
+        return $match;
     }
 }

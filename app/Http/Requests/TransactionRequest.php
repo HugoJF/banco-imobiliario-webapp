@@ -14,9 +14,8 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'origin_id'      => 'required|numeric|exists:users,id',
-            'destination_id' => 'required|numeric|exists:users,id',
-            'match_id'       => 'required|numeric|exists:matches,id',
+            'origin_id'      => 'nullable|numeric|exists:users,id',
+            'destination_id' => 'nullable|numeric|exists:users,id',
         ];
     }
 }

@@ -3,6 +3,11 @@ module.exports = {
     important: true,
     separator: ':',
     theme: {
+        extend: {
+            gridTemplateColumns: {
+                '2-auto': 'repeat(2, auto)',
+            }
+        },
         screens: {
             sm: '640px',
             md: '768px',
@@ -307,7 +312,7 @@ module.exports = {
             disc: 'disc',
             decimal: 'decimal',
         },
-        margin: (theme, { negative }) => ({
+        margin: (theme, {negative}) => ({
             auto: 'auto',
             ...theme('spacing'),
             ...negative(theme('spacing')),

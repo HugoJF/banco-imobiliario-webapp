@@ -13,6 +13,8 @@ class Match extends Model
 
     protected $dates = ['started_at', 'ended_at'];
 
+    protected $fillable = ['starting_money'];
+
     public function users()
     {
         return $this->belongsToMany(User::class)->using(MatchUser::class);

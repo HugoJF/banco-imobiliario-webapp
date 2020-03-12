@@ -3,16 +3,17 @@ export const me = {
     reducers: {
         set(state, payload) {
             state = payload;
-            console.log(payload);
             return state;
         },
     },
     effects: dispatch => ({
         async get(payload, rootState) {
             try {
-                let response = await axios.get(`me`);
+                let response = await axios.get(`api/me`);
                 dispatch.me.set(response.data);
                 await dispatch.players.getById(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Error while fetching own information', e);
             }
@@ -77,36 +78,36 @@ export const players = {
          */
         async get(payload, rootState) {
             try {
-                let response = await axios.get(`match/${payload}/players`);
+                let response = await axios.get(`api/match/${payload}/players`);
 
                 // TODO: avoid dispatching multiple actions by updating reducer
-                if (response.data) {
-                    for (let player of response.data) {
-                        dispatch.players.add(player);
-                    }
+                for (let player of response.data) {
+                    dispatch.players.add(player);
                 }
+
+                return response.data;
             } catch (e) {
                 console.error('Error while fetching players from match', e);
             }
         },
         async edit(payload, rootState) {
             try {
-                let response = await axios.patch(`users/${payload.id}`, payload.data);
+                let response = await axios.patch(`api/users/${payload.id}`, payload.data);
 
-                if (response.data) {
-                    dispatch.players.update(response.data);
-                }
+                dispatch.players.update(response.data);
+
+                return response.data;
             } catch (e) {
                 console.log('Error fetching user', e);
             }
         },
         async getById(payload, rootState) {
             try {
-                let response = await axios.get(`users/${payload}`);
+                let response = await axios.get(`api/users/${payload}`);
 
-                if (response.data) {
-                    dispatch.players.add(response.data);
-                }
+                dispatch.players.add(response.data);
+
+                return response.data;
             } catch (e) {
                 console.log('Error fetching user', e);
             }
@@ -120,7 +121,7 @@ export const balances = {
         update(state, payload) {
             let balances = Object
                 .entries(payload)
-                .map((b) => ({id: b[0], balance: b[1]}));
+                .map(([id, balance]) => ({id, balance}));
 
             for (let balance of balances) {
                 state[balance.id] = balance.balance;
@@ -132,13 +133,55 @@ export const balances = {
     effects: dispatch => ({
         async get(payload, rootState) {
             try {
-                let response = await axios.get(`match/${payload}/balances`);
+                let response = await axios.get(`api/match/${payload}/balances`);
 
-                if (response.data) {
-                    dispatch.balances.update(response.data);
-                }
+                dispatch.balances.update(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Error while fetching players from match', e);
+            }
+        },
+    }),
+};
+
+export const transactions = {
+    state: {},
+    reducers: {
+        add(state, payload) {
+            if (!Array.isArray(payload)) {
+                payload = [payload];
+            }
+
+            for (let transaction of payload) {
+                state[transaction.id] = transaction;
+            }
+
+            return state;
+        },
+    },
+    effects: dispatch => ({
+        async create(payload, rootState) {
+            try {
+                let response = await axios.post(`api/match/${payload.id}/transaction`, payload.data);
+
+                dispatch.transactions.add(response.data);
+
+                return response.data;
+            } catch (e) {
+                console.error('Error creating new transaction');
+            }
+        },
+
+        async getByMatchId(payload, rootState) {
+            try {
+                let response = await axios.get(`api/match/${payload}/transactions`);
+
+                dispatch.transactions.add(response.data);
+
+                return response.data;
+            } catch (e) {
+                console.error('Error fetching match transactions', e);
             }
         },
     }),
@@ -168,11 +211,11 @@ export const match = {
          */
         async search(payload, rootState) {
             try {
-                let response = await axios.get('match/search');
+                let response = await axios.get('api/match/search');
 
-                if (response.data) {
-                    dispatch.match.set(response.data);
-                }
+                dispatch.match.set(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Error while search for current match', e);
             }
@@ -180,8 +223,10 @@ export const match = {
 
         async createAndJoin(payload, rootState) {
             try {
-                await dispatch.match.create();
-                await dispatch.match.join(rootState.match.id);
+                let match = await dispatch.match.create();
+                await dispatch.match.join(match.id);
+
+                return match;
             } catch (e) {
                 console.error('Error while trying to create and join a match', e);
             }
@@ -189,13 +234,11 @@ export const match = {
 
         async create(payload, rootState) {
             try {
-                let response = await axios.post('match/create');
+                let response = await axios.post('api/match/create');
 
-                if (response.data) {
-                    dispatch.match.set(response.data);
-                }
+                dispatch.match.set(response.data);
 
-                dispatch.match.join(response.data.id);
+                return response.data;
             } catch (e) {
                 console.error('Error while trying to create and join a match', e);
             }
@@ -210,21 +253,35 @@ export const match = {
          */
         async join(payload, rootState) {
             try {
-                let response = await axios.post(`match/${payload}/join`);
-                if (response.data) {
-                    dispatch.match.set(response.data);
-                }
+                let response = await axios.post(`api/match/${payload}/join`);
+
+                dispatch.match.set(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Failed to join match', payload, e);
             }
         },
 
+        async nextTurn(payload, rootState) {
+            try {
+                let response = await axios.patch(`api/match/${payload}/next`);
+
+                dispatch.match.set(response.data);
+
+                return response.data;
+            } catch (e) {
+                console.error('Error going to the next turn', e);
+            }
+        },
+
         async start(payload, rootState) {
             try {
-                let response = await axios.patch(`match/${payload}/start`);
-                if (response.data) {
-                    dispatch.match.set(response.data);
-                }
+                let response = await axios.patch(`api/match/${payload}/start`);
+
+                dispatch.match.set(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Failed to start match', payload, e);
             }
@@ -232,21 +289,35 @@ export const match = {
 
         async end(payload, rootState) {
             try {
-                let response = await axios.patch(`match/${payload}/end`);
-                if (response.data) {
-                    dispatch.match.set(response.data);
-                }
+                let response = await axios.patch(`api/match/${payload}/end`);
+
+                dispatch.match.set(response.data);
+
+                return response.data;
             } catch (e) {
                 console.error('Failed to end match', payload, e);
             }
         },
 
+        async update(payload, rootState) {
+            try {
+                let response = await axios.patch(`api/match/${payload.id}`, payload.data);
+
+                dispatch.match.set(response.data);
+
+                return response.data;
+            } catch (e) {
+                console.error('Failed to update match details', payload, e);
+            }
+        },
+
         async leave(payload, rootState) {
             try {
-                let response = await axios.delete(`match/leave`);
-                if (response.data) {
-                    dispatch.match.set(null);
-                }
+                let response = await axios.delete(`api/match/leave`);
+
+                dispatch.match.set(null);
+
+                return response.data;
             } catch (e) {
                 console.error('Failed to leave match', payload, e);
             }
