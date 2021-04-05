@@ -1,22 +1,23 @@
 import {useEffect, useRef} from "react";
 
-export default function useEcho(channel, event, handler, publicChannel = false) {
-    const handlerRef = useRef(null);
+type refType<T> = (e: T) => void;
 
-    handlerRef.current = handler;
+export default function useEcho<T>(channel: string|null, event: string, handler: (e: T) => void, publicChannel = false) {
+    const handlerRef = useRef<refType<T>>(handler);
 
     useEffect(() => {
         if (channel) {
             console.log(`Joining channel ${channel}`);
 
-            Echo[publicChannel ? 'channel' : 'private'](channel)
+            window
+                .Echo[publicChannel ? 'channel' : 'private'](channel)
                 .listen(event, handlerRef.current);
         }
         return () => {
             if (channel) {
                 console.log(`Leaving channel ${channel}`);
 
-                Echo.leave(channel);
+                window.Echo.leave(channel);
             }
         }
     }, [channel]);

@@ -1,4 +1,4 @@
-const suffixes = ['', 'k', 'M'];
+const suffixes = ['', 'k', 'M', 'B'];
 
 export function formatNumber (value) {
     let index = 0;

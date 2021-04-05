@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,12 +12,20 @@ const tailwindcss = require('tailwindcss');
  */
 
 mix
+    .ts('resources/js/app.ts', 'public/js')
     .postCss('resources/css/tailwind.css', 'public/css', [
-        tailwindcss('./tailwind.config.js'),
-        require('autoprefixer'),
+        require('@tailwindcss/jit'),
     ])
-    .js('resources/js/app.js', 'public/js')
-    .react()
-    .sass('resources/sass/app.scss', 'public/css')
+    .webpackConfig({
+        resolve: {
+            alias: {
+                'react-dom': '@hot-loader/react-dom'
+            }
+        }
+    })
     .sourceMaps()
 ;
+
+if (mix.inProduction()) {
+    mix.version();
+}

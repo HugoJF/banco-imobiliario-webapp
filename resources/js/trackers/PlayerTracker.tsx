@@ -13,14 +13,17 @@ export default function PlayerTracker() {
     }, [match ? match.id : null]);
 
     useEcho(match ? `match-${match.id}` : null, 'PlayerJoined', (e) => {
+        // @ts-ignore
         dispatch.players.add(e.user);
     }, true);
 
     useEcho(match ? `match-${match.id}` : null, 'PlayerLeft', (e) => {
+        // @ts-ignore
         dispatch.players.remove(e.user);
     }, true);
 
     useEcho('users', 'UserUpdated', (e) => {
+        // @ts-ignore
         dispatch.players.update(e.user);
     }, true);
 

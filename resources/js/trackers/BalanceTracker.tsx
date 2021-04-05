@@ -9,11 +9,12 @@ export default function () {
 
     useEffect(() => {
         if (match)
-            dispatch.transactions.getByMatchId(match.id);
-    }, [match?.id]);
+            dispatch.balances.get(match.id);
+    }, [match ? match.id : null]);
 
-    useEcho(match ? `match-${match.id}` : null, 'TransactionCreated', (e) => {
-        dispatch.transactions.add(e.transaction);
+    useEcho(match ? `match-${match.id}` : null, 'BalanceUpdated', (e) => {
+        // @ts-ignore
+        dispatch.balances.update(e.balances);
     }, true);
 
     return null;

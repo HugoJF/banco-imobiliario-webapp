@@ -8,6 +8,7 @@ export default function MatchTracker() {
     const match = useMatch();
 
     useEcho(match ? `match-${match.id}` : null, 'MatchUpdated', (e) => {
+        // @ts-ignore
         dispatch.match.set(e.match);
     }, true);
 
