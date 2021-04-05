@@ -10,18 +10,20 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/index.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&subset=latin"
+          rel="stylesheet"
+          type="text/css">
 
     <!-- Styles -->
     <link href="{{ mix('css/tailwind.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app bg-black">
-    <main class="py-4">
+<div class="min-h-screen bg-gray-100 text-black" id="app">
+    <main>
         @yield('content')
     </main>
 </div>

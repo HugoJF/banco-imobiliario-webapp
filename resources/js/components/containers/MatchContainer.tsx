@@ -1,43 +1,34 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import useAsync from "../../hooks/useAsync";
-import useMatch from "../../hooks/useMatch";
-import MatchJoinContainer from "./MatchJoinContainer";
-import MatchStartedContainer from "./MatchStartedContainer";
-import MatchEndedContainer from "./MatchEndedContainer";
-import MatchConfiguration from "./MatchConfigurationContainer";
-import MatchLoadingContainer from "./MatchLoadingContainer";
+import React from 'react';
+import {Title} from "../ui/Title";
+import {Button} from "../ui/Button";
+import {ButtonGroup} from "../ui/ButtonGroup";
+import {MatchType} from "../../types";
+import {HorizontalButton} from "../ui/HorizontalButton";
 
-export default function MatchContainer() {
-    const dispatch = useDispatch();
-    const match = useMatch();
-    const [loading, setLoading] = useState(true);
-
-    // If this component is rendered a second time, setLoading will lose its reference!
-    useAsync(async () => {
-        await Promise.all([
-            dispatch.me.get(),
-            dispatch.match.search(),
-        ]);
-
-        setLoading(false);
-    });
-
-    if (loading) {
-        return <MatchLoadingContainer/>
-    }
-
-    if (!match) {
-        return <MatchJoinContainer/>;
-    }
-
-    if (match.ended_at) {
-        return <MatchEndedContainer/>;
-    }
-
-    if (match.started_at) {
-        return <MatchStartedContainer/>
-    }
-
-    return <MatchConfiguration/>
+export type MatchContainerType = {
+    match: MatchType;
 }
+
+export const MatchContainer: React.FC<MatchContainerType> = ({match}) => {
+    return <div className="space-y-8">
+        <Title>Partida #{match.id}</Title>
+
+
+        <HorizontalButton>
+            <h2 className="text-3xl text-black font-bold tracking-tight">
+                Pagar
+            </h2>
+        </HorizontalButton>
+        <HorizontalButton>
+            <h2 className="text-3xl text-black font-bold tracking-tight">
+                Saldos
+            </h2>
+        </HorizontalButton>
+
+
+        <ButtonGroup>
+            <Button>Próxima rodada</Button>
+            <Button color="default">Finalizar partida</Button>
+        </ButtonGroup>
+    </div>
+};

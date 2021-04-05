@@ -2,6 +2,7 @@ module.exports = {
     purge: [
         './resources/js/**/*.tsx',
         './resources/js/**/*.ts',
+        './resources/views/**/*.php',
     ],
     theme: {
         extend: {
@@ -11,7 +12,9 @@ module.exports = {
             fontSize: {},
             spacing: {},
             boxShadow: {},
-            colors: {}
+            colors: {
+                "black": "#24292E",
+            }
         },
     },
     plugins: [],
