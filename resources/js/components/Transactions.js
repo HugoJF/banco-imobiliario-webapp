@@ -1,9 +1,9 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
+import {useNavigate} from "@reach/router";
 import useTransactions from "../hooks/useTransactions";
 import Title from "./ui/Title";
 import PaddedButton from "./ui/PaddedButton";
-import {useNavigate} from "@reach/router";
 import Transaction from "./ui/Transaction";
 
 export default function () {
@@ -18,8 +18,8 @@ export default function () {
     return <div>
         <Title>Transações</Title>
         {
-            Object.values(transactions).map((transaction) => (
-                <Transaction transaction={transaction}/>
+            Object.keys(transactions).map(Number).sort((b, a) => a - b).map((id) => (
+                <Transaction transaction={transactions[id]}/>
             ))
         }
 

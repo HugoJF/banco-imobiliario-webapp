@@ -21,6 +21,10 @@ Route::middleware(['auth'])->prefix('api')->group(function () {
         Route::patch('{user}', 'HomeController@update')->name('user.update');
     });
 
+    Route::prefix('transactions')->group(function () {
+        Route::patch('{transaction}/cancel', 'TransactionController@cancel')->name('transaction.cancel');
+    });
+
     Route::prefix('match')->group(function () {
         Route::get('search', 'MatchController@search')->name('match.search');
         Route::get('{match}/players', 'MatchController@players')->name('match.players');

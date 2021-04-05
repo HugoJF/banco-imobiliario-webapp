@@ -1,6 +1,15 @@
 import React, {useState} from 'react';
 import PlayerButton from "./PlayerButton";
 import Button from "./Button";
+import tailwind from "../helpers/tailwind";
+
+const Pad = tailwind.div`
+    p-4
+`;
+
+const Wrapper = tailwind.div`
+    p-5 grid grid-cols-4 gap-4
+`;
 
 export default function ({players, onSelect, includeBank = true, selectable = true, initialSelect}) {
     const [selected, setSelected] = useState(initialSelect);
@@ -21,8 +30,7 @@ export default function ({players, onSelect, includeBank = true, selectable = tr
         }
     }
 
-    // TODO: implement bank
-    return <div className="p-5 grid grid-cols-4 gap-4">
+    return <Wrapper>
         {
             includeBank &&
             <Button
@@ -31,7 +39,7 @@ export default function ({players, onSelect, includeBank = true, selectable = tr
                 selected={selected === 0}
                 color="gray"
             >
-                <div className="px-4 py-4">Banco</div>
+                <Pad>Banco</Pad>
             </Button>
         }
         {
@@ -42,5 +50,5 @@ export default function ({players, onSelect, includeBank = true, selectable = tr
                 player={player}
             />)
         }
-    </div>
+    </Wrapper>
 }

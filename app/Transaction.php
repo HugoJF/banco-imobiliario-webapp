@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    protected $dates = ['canceled_at'];
+
     protected static function boot()
     {
         parent::boot();

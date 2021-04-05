@@ -173,6 +173,18 @@ export const transactions = {
             }
         },
 
+        async cancel(id, rootState) {
+            try {
+                let response = await axios.patch(`api/transactions/${id}/cancel`);
+
+                dispatch.transactions.add(response.data);
+
+                return response.data;
+            } catch (e) {
+                console.error('Error patching transaction', payload, e);
+            }
+        },
+
         async getByMatchId(payload, rootState) {
             try {
                 let response = await axios.get(`api/match/${payload}/transactions`);

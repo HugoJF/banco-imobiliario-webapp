@@ -1,14 +1,23 @@
 import React from 'react';
+import tailwind from "../helpers/tailwind";
 import Check from "../svg/Check";
 import Button from "./Button";
 
-export default function ColorButton(params) {
-    let {selected, color} = params;
-    return <Button className="w-24 h-24" {...params}>
-        <div className="flex items-center justify-center">
-            <div className={`w-10 h-10 text-${color}-900`}>
+const Wrapper = tailwind.div`
+    flex items-center justify-center
+`;
+
+const CheckContainer = tailwind.div`
+    ${({color}) => `w-10 h-10 text-${color}-900`}
+`;
+
+export default function ColorButton(props) {
+    let {selected, color} = props;
+    return <Button className="w-24 h-24" {...props}>
+        <Wrapper>
+            <CheckContainer color={color}>
                 {selected && <Check/>}
-            </div>
-        </div>
+            </CheckContainer>
+        </Wrapper>
     </Button>
 }

@@ -74,12 +74,16 @@ class MatchService
                 ->get();
             $transactions = $match
                 ->transactions()
+                ->whereNull('canceled_at')
                 ->whereIn('origin_id', $ids, 'or')
                 ->whereIn('destination_id', $ids)
                 ->get();
         } else {
             $users = $match->users;
-            $transactions = $match->transactions;
+            $transactions = $match
+                ->transactions()
+                ->whereNull('canceled_at')
+                ->get();
         }
 
         $balances = $users->mapWithKeys(function ($user) {
@@ -163,13 +167,13 @@ class MatchService
         return $transaction;
     }
 
-	public function nextTurn(Match $match)
-	{
-	    $match->turn = $match->turn + 1;
-	    $match->save();
+    public function nextTurn(Match $match)
+    {
+        $match->turn = $match->turn + 1;
+        $match->save();
 
-	    return $match;
-	}
+        return $match;
+    }
 
     public function update(Match $match, array $data)
     {

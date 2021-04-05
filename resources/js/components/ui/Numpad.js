@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Button from "./Button";
+import tailwind from "../helpers/tailwind";
 
 const buttons = {
     '1': 'gray',
@@ -16,6 +17,30 @@ const buttons = {
 };
 
 const buttonOrder = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '000'];
+
+const EraseButton = tailwind.div`
+    px-2 font-medium text-3xl cursor-pointer select-none
+`;
+
+const Dollar = tailwind.span`
+    font-medium text-3xl
+`;
+
+const Input = tailwind.input`
+    col-span-3 flex-grow text-right text-2xl text-gray-900 bg-transparent
+`;
+
+const Keyboard = tailwind.div`
+    grid grid-cols-3 grid-rows-5 gap-2
+`;
+
+const InputGroup = tailwind.div`
+    col-span-3 px-4 flex self-center items-baseline
+`;
+
+const ButtonWrapper = tailwind.div`
+    py-6 text-white text-2xl font-bold
+`;
 
 export default function ({onOk}) {
     const [raw, setRaw] = useState('');
@@ -43,27 +68,25 @@ export default function ({onOk}) {
     }
 
     function button(text, color, onSelect) {
-        return <Button onClick={onSelect}
-                       key={text}
-                       color={color}
+        return <Button
+            $onClick={onSelect}
+            $key={text}
+            color={color}
         >
-            <div className="py-6 text-white text-2xl font-bold">
-                {text}
-            </div>
+            <ButtonWrapper>{text}</ButtonWrapper>
         </Button>
     }
 
-    return <div className="grid grid-cols-3 grid-rows-5 gap-2">
-        <div className="col-span-3 px-4 flex self-center items-baseline">
-            <span className="font-medium text-3xl">$</span>
-            <input
-                className="col-span-3 flex-grow text-right text-2xl text-gray-900 bg-transparent"
-                value={input}
-                type="text"
-                readOnly
+    return <Keyboard>
+        <InputGroup>
+            <Dollar>$</Dollar>
+            <Input
+                $value={input}
+                $type="text"
+                $readOnly
             />
-            <span className="px-2 font-medium text-3xl cursor-pointer select-none" onClick={erase}>⌫</span>
-        </div>
+            <EraseButton $onClick={erase}>⌫</EraseButton>
+        </InputGroup>
 
         {
             buttonOrder.map(text => (
@@ -72,5 +95,5 @@ export default function ({onOk}) {
         }
 
         {button('OK', 'green', handleOk)}
-    </div>
+    </Keyboard>
 }

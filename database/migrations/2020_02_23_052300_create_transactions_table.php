@@ -27,6 +27,8 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('destination_id')->nullable();
             $table->foreign('destination_id')->references('id')->on('users');
 
+            $table->dateTime('canceled_at')->nullable();
+
             $table->timestamps();
         });
     }

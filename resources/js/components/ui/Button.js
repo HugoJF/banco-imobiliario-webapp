@@ -10,7 +10,7 @@ const Wrapper = tailwind.div`
     cursor-pointer rounded-lg
     ${({when}) => when('selected', 'shadow-underline', 'shadow-underline-none')}
     ${({when}) => when('selected', '-translate-y-10px')}
-    ${({when, color}) => when('hoverable', `hover:bg-${color}-700 hover:shadow`)}
+    ${({color, hoverable, selected}) => (!hoverable || selected ? '' : `hover:bg-${color}-700 hover:shadow`)}
 `;
 
 const Text = tailwind.div`

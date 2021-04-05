@@ -2,8 +2,13 @@ import React, {useState} from 'react';
 import ColorButton from "./ColorButton";
 import useMe from "../../hooks/useMe";
 import usePlayers from "../../hooks/usePlayers";
+import tailwind from "../helpers/tailwind";
 
 const colors = ['blue', 'red', 'green', 'yellow', 'gray', 'purple'];
+
+const Wrapper = tailwind.div`
+    m-4 grid grid-cols-3 gap-4 justify-center
+`;
 
 export default function PlayerColorSelector({forceSelect, onSelect}) {
     const me = useMe();
@@ -19,7 +24,7 @@ export default function PlayerColorSelector({forceSelect, onSelect}) {
         }
     }
 
-    return <div className="antialiased m-4 grid grid-cols-3 gap-4 justify-center">
+    return <Wrapper>
         {
             colors.map(color => <ColorButton
                 onClick={handleClick.bind(null, color)}
@@ -27,5 +32,5 @@ export default function PlayerColorSelector({forceSelect, onSelect}) {
                 color={color}
             />)
         }
-    </div>
+    </Wrapper>
 }
