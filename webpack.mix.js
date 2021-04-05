@@ -17,7 +17,8 @@ mix
         tailwindcss('./tailwind.config.js'),
         require('autoprefixer'),
     ])
-    .react('resources/js/app.js', 'public/js')
+    .js('resources/js/app.js', 'public/js')
+    .react()
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps()
 ;
