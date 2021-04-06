@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class MatchController extends Controller
 {
+    public function index()
+    {
+        return Match::all();
+    }
+
     public function search(MatchService $service)
     {
         return $service->current();
@@ -37,11 +42,9 @@ class MatchController extends Controller
         return response()->json($match)->setStatusCode(201);
     }
 
-    public function create(MatchService $service, Match $match)
+    public function create(MatchService $service)
     {
-        $match = $service->create();
-
-        return $match;
+        return $service->create();
     }
 
     public function start(MatchService $service, Match $match)
