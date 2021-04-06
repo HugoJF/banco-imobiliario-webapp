@@ -22,7 +22,7 @@ class MatchTest extends TestCase
     public function test_user_is_redirected_to_login_if_trying_to_join_match_unauthenticated()
     {
         /** @var Match $match */
-        $match = factory(Match::class)->create();
+        $match = Match::factory()->create();
 
         $response = $this->post(route('match.join', $match));
 
@@ -32,10 +32,12 @@ class MatchTest extends TestCase
     public function test_user_can_join_match()
     {
         /** @var Match $match */
-        $match = factory(Match::class)->create();
+        $match = Match::factory()->create([
+            'started_at' => null,
+        ]);
 
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         Auth::login($user);
 
@@ -47,40 +49,48 @@ class MatchTest extends TestCase
     public function test_user_cannot_join_match_multiple_times()
     {
         /** @var Match $match */
-        $match = factory(Match::class)->state('open')->create();
+        $match = Match::factory()->create([
+            'started_at' => null,
+        ]);
 
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         Auth::login($user);
 
         $response1 = $this->post(route('match.join', $match));
-        $response2 = $this->post(route('match.join', $match));
+        $response2 = $this->post(route('match.join', $match), [], [
+            'Accept' => 'application/json',
+        ]);
 
         $response1->assertStatus(201);
         $response2->assertStatus(409);
 
         $response2->assertJson([
-            'error' => 'ALREADY_IN_MATCH',
+            'message' => 'ALREADY_IN_MATCH',
         ]);
     }
 
     public function test_user_cannot_join_already_started_match()
     {
         /** @var Match $match */
-        $match = factory(Match::class)->state('started')->create();
+        $match = Match::factory()->create([
+            'started_at' => now()->subDay(),
+        ]);
 
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         Auth::login($user);
 
-        $response = $this->post(route('match.join', $match));
+        $response = $this->post(route('match.join', $match), [], [
+            'Accept' => 'application/json',
+        ]);
 
         $response->assertStatus(409);
 
         $response->assertJson([
-            'error' => 'MATCH_STARTED',
+            'message' => 'MATCH_STARTED',
         ]);
     }
 }

@@ -26,11 +26,11 @@ class MatchService
     {
         // There is no need to check if it's past, since it should always be.
         if ($match->started_at) {
-            throw new MatchAlreadyStartedException();
+            throw new MatchAlreadyStartedException;
         }
 
         if ($match->users()->where('user_id', $user->getKey())->exists()) {
-            throw new AlreadyInMatchException();
+            throw new AlreadyInMatchException;
         }
 
         $match->users()->attach($user);

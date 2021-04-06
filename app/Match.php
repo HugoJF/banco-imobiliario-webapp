@@ -3,10 +3,13 @@
 namespace App;
 
 use App\Events\MatchUpdated;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
+    use HasFactory;
+
     protected $dispatchesEvents = [
         'updated' => MatchUpdated::class,
     ];

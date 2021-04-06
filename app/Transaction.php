@@ -4,10 +4,13 @@ namespace App;
 
 use App\Events\BalanceUpdated;
 use App\Events\TransactionCreated;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    use HasFactory;
+
     protected $dates = ['canceled_at'];
 
     protected static function boot()

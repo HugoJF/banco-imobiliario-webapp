@@ -1,24 +1,29 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Match;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Match::class, function (Faker $faker) {
-    return [
-        'starting_money' => $faker->numberBetween(10000, 1000000),
-    ];
-});
+class MatchFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Match::class;
 
-$factory->state(Match::class, 'open', function (Faker $faker) {
-    return [
-        'started_at' => null,
-    ];
-});
-
-$factory->state(Match::class, 'started', function (Faker $faker) {
-    return [
-        'started_at' => $faker->dateTimeBetween(),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'starting_money' => $this->faker->numberBetween(10000, 1000000),
+            'started_at' => $this->faker->dateTimeBetween(),
+        ];
+    }
+}

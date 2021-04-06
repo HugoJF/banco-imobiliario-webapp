@@ -20,13 +20,15 @@ class MatchUnitTest extends TestCase
     public function test_match_balances_can_be_calculated()
     {
         /** @var User $user1 */
-        $user1 = factory(User::class)->create();
+        $user1 = User::factory()->create();
 
         /** @var User $user2 */
-        $user2 = factory(User::class)->create();
+        $user2 = User::factory()->create();
 
         /** @var Match $match */
-        $match = factory(Match::class)->create();
+        $match = Match::factory()->create([
+            'started_at' => null,
+        ]);
 
         /** @var MatchService $service */
         $service = app(MatchService::class);
@@ -41,7 +43,7 @@ class MatchUnitTest extends TestCase
         ];
 
         foreach ($transactions as [$origin, $destination, $value]) {
-            factory(Transaction::class)->create([
+            Transaction::factory()->create([
                 'match_id'       => $match,
                 'origin_id'      => $origin ? $origin->getKey() : null,
                 'destination_id' => $destination ? $destination->getKey() : null,
@@ -71,10 +73,12 @@ class MatchUnitTest extends TestCase
     public function test_user_can_join_a_match()
     {
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         /** @var Match $match */
-        $match = factory(Match::class)->create();
+        $match = Match::factory()->create([
+            'started_at' => null,
+        ]);
 
         /** @var MatchService $service */
         $service = app(MatchService::class);
@@ -90,10 +94,10 @@ class MatchUnitTest extends TestCase
     public function test_user_cannot_join_started_match()
     {
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         /** @var Match $match */
-        $match = factory(Match::class)->state('started')->create();
+        $match = Match::factory()->create();
 
         /** @var MatchService $service */
         $service = app(MatchService::class);
@@ -112,10 +116,12 @@ class MatchUnitTest extends TestCase
     public function test_exception_is_raised_if_user_attempts_to_join_the_same_match()
     {
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         /** @var Match $match */
-        $match = factory(Match::class)->create();
+        $match = Match::factory()->create([
+            'started_at' => null,
+        ]);
 
         /** @var MatchService $service */
         $service = app(MatchService::class);
