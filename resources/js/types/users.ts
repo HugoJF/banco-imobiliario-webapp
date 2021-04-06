@@ -1,14 +1,11 @@
-import {SoftDeletes, Timestamps} from "../types";
-
-export type UserType = UserProperties & UserComputedProperties & Timestamps & SoftDeletes;
+export type UserType = UserProperties & UserComputedProperties;
 
 export type UserProperties = {
-    name: string,
-    phone: string | null,
-    email: string,
-    admin: boolean,
+    name: string;
+    email: string;
 }
 
 export type UserComputedProperties = {
     id: number;
+    matches: number;
 }

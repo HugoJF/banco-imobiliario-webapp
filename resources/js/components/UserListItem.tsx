@@ -1,8 +1,8 @@
 import React from 'react';
 import {Activity} from "react-feather";
-import {UserType} from "../types";
 import {Stat} from "./ui/Stat";
 import {HorizontalButton} from "./ui/HorizontalButton";
+import {UserType} from "../types/users";
 
 export type UserListItemProps = {
     clickable?: boolean;

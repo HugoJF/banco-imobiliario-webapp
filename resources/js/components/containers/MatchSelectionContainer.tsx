@@ -1,10 +1,11 @@
 import React from 'react';
 import {Title} from "../ui/Title";
-import {MatchType, UserType} from "../../types";
+import {MatchType} from "../../types";
 import {MatchList} from "../MatchList";
 import {Button} from "../ui/Button";
 import {Plus} from "react-feather";
 import {ButtonGroup} from "../ui/ButtonGroup";
+import {UserType} from "../../types/users";
 
 const users: UserType[] = [
     {

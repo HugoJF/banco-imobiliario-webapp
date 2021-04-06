@@ -1,3 +1,5 @@
+import {UserType} from "./types/users";
+
 export type Timestamps = {
     updated_at: string;
     created_at: string;
@@ -7,13 +9,7 @@ export type SoftDeletes = {
     deleted_at: string;
 }
 
-export type UserType = {
-    id: number;
-    name: string;
-    email: string;
-    matches: number;
-}
-
+// TODO: move
 export type MatchType = Timestamps & {
     id: string; // FIXME: number or string?
     rounds: number;

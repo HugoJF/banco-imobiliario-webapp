@@ -1,6 +1,6 @@
 import React from 'react';
 import {UserListItem} from "./UserListItem";
-import {UserType} from "../types";
+import {UserType} from "../types/users";
 
 export type UserListProps = {
     clickable?: boolean;
@@ -9,6 +9,10 @@ export type UserListProps = {
 
 export const UserList: React.FC<UserListProps> = ({clickable = true, users}) => {
     return <div className="space-y-4">
-        {users.map(user => <UserListItem clickable={clickable} user={user}/>)}
+        {users.map(user => <UserListItem
+            key={user.id}
+            clickable={clickable}
+            user={user}
+        />)}
     </div>
 };

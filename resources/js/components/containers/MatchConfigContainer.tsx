@@ -3,7 +3,7 @@ import {Title} from "../ui/Title";
 import {UserList} from "../UserList";
 import {Button} from "../ui/Button";
 import {ButtonGroup} from "../ui/ButtonGroup";
-import {UserType} from "../../types";
+import {UserType} from "../../types/users";
 
 const users: UserType[] = [
     {
