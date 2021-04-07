@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Match;
-use App\Transaction;
-use App\User;
+use App\Models\Match;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory

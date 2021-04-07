@@ -7,5 +7,5 @@ export type UserProperties = {
 
 export type UserComputedProperties = {
     id: number;
-    matches: number;
+    match_count: number;
 }

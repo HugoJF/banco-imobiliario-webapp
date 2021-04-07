@@ -3,17 +3,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {store} from "./store";
-import {UserSelectionContainer} from "./components/containers/UserSelectionContainer";
-import {MatchSelectionContainer} from "./components/containers/MatchSelectionContainer";
-import {MatchConfigContainer} from "./components/containers/MatchConfigContainer";
-import {MatchContainer} from "./components/containers/MatchContainer";
-import {BrowserRouter as Router, Redirect} from "react-router-dom";
-import {Route, Switch} from "react-router";
+import {BrowserRouter as Router} from "react-router-dom";
+import {hot, setConfig} from "react-hot-loader";
 import {QueryClient, QueryClientProvider} from "react-query";
+import {Root} from "./routes/root";
 
+const isProduction = process.env.MIX_APP_ENV === 'production';
 
 // Create a client
 const queryClient = new QueryClient();
+
+if (!isProduction) {
+    setConfig({reloadHooks: false});
+}
+
+const WrappedRoot = hot(module)(Root);
 
 ReactDOM.render(
     <Router>
@@ -23,27 +27,9 @@ ReactDOM.render(
                 {/*<PlayerTracker/>*/}
                 {/*<BalanceTracker/>*/}
                 {/*<TransactionTracker/>*/}
-
-                <Switch>
-                    <Route path="/users" children={<UserSelectionContainer/>}/>
-                    <Route path="/matches" children={<MatchSelectionContainer/>}/>
-                    <Route path="/match/:id/config" children={<MatchConfigContainer/>}/>
-                    <Route
-                        path="/match/:id" children={<MatchContainer
-                        match={{
-                            id: 'jd2',
-                            users: [{id: 1, name: 'Ronald', matches: 2, email: 'asd@asd.com'}],
-                            updated_at: 'asd',
-                            created_at: 'as',
-                            started_at: 'asd',
-                            rounds: 20,
-                        }}
-                    />}
-                    />
-
-                    <Redirect to="/users"/>
-                </Switch>
+                <WrappedRoot/>
             </Provider>
         </QueryClientProvider>
     </Router>
-    , document.getElementById('container'));
+    , document.getElementById('container')
+);

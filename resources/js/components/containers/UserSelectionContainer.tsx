@@ -16,7 +16,7 @@ export const UserSelectionContainer: React.FC = () => {
     return <div className="space-y-8">
         <Title>Usuários</Title>
 
-        <UserList users={data.data}/>
+        <UserList users={data.data.data}/>
 
         <ButtonGroup>
             <Button icon={Plus}>Registrar</Button>

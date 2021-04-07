@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
-use App\Match;
+use App\Models\Match;
 use App\Services\MatchService;
-use App\Transaction;
 use Illuminate\Http\Request;
 
 class MatchController extends Controller
 {
     public function index()
     {
-        return Match::all();
+        return Match::with(['users'])->get();
+    }
+
+    public function show(Match $match)
+    {
+        $match->loadMissing(['users']);
+        
+        return $match;
     }
 
     public function search(MatchService $service)

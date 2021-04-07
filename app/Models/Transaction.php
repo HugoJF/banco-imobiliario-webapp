@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Events\BalanceUpdated;
 use App\Events\TransactionCreated;

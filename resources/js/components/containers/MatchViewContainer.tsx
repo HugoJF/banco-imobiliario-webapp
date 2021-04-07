@@ -3,9 +3,8 @@ import {useParams} from "react-router";
 import {MatchView} from "../MatchView";
 import {useMatch} from "../../queries/useMatch";
 import {Loader} from "react-feather";
-import {MatchConfig} from "../MatchConfig";
 
-export const MatchConfigContainer: React.FC = () => {
+export const MatchViewContainer: React.FC = () => {
     const {id} = useParams<{ id: string }>();
     const {status, data, error, isFetching} = useMatch(id);
 
@@ -13,7 +12,7 @@ export const MatchConfigContainer: React.FC = () => {
         return <Loader/>;
     }
 
-    return <MatchConfig
+    return <MatchView
         match={data.data}
     />
 };

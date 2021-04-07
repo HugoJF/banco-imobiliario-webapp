@@ -7,7 +7,7 @@ export type MatchListProps = {
 }
 
 export const MatchList: React.FC<MatchListProps> = ({matches}) => {
-    return <div className="mt-8 space-y-4">
+    return <div className="space-y-4">
         {matches.map(match => <MatchListItem match={match}/>)}
     </div>
 };

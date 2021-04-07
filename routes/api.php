@@ -47,6 +47,7 @@ Route::prefix('transactions')->group(function () {
 Route::prefix('matches')->group(function () {
     Route::get('/', [\App\Http\Controllers\MatchController::class, 'index'])->name('matches.index');
     Route::get('search', [\App\Http\Controllers\MatchController::class, 'search'])->name('matches.search');
+    Route::get('{match}', [\App\Http\Controllers\MatchController::class, 'show'])->name('matches.show');
     Route::get('{match}/players', [\App\Http\Controllers\MatchController::class, 'players'])->name('matches.players');
     Route::get('{match}/balances', [\App\Http\Controllers\MatchController::class, 'balances'])->name('matches.balances');
     Route::get('{match}/transactions', [\App\Http\Controllers\MatchController::class, 'transactions'])->name('matches.transactions');

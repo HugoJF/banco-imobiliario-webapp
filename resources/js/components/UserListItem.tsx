@@ -18,7 +18,7 @@ export const UserListItem: React.FC<UserListItemProps> = ({clickable, user}) => 
 
         {/* User rounds */}
         <Stat icon={Activity}>
-            {user.matches}
+            {user.match_count}
         </Stat>
     </HorizontalButton>
 };

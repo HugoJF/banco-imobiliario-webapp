@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Match;
+use App\Models\Match;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MatchFactory extends Factory
