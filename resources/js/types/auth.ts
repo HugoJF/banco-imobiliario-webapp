@@ -2,7 +2,8 @@ import {UserProperties} from "./users";
 
 export type AuthState = {
     me?: UserProperties;
-    failed?: boolean;
+    guest: boolean;
+    failed: boolean;
 };
 
 export type LoginCredentials = {

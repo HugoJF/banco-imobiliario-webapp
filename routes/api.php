@@ -24,6 +24,7 @@ Route::prefix('users')->group(function () {
     Route::get('me', [\App\Http\Controllers\UserController::class, 'me'])->name('users.me');
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('{user}', [\App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+    Route::post('login/{user}', [\App\Http\Controllers\UserController::class, 'login'])->name('users.login');
     Route::patch('{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
 });
 

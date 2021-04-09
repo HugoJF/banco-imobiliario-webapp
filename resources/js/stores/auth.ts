@@ -1,7 +1,7 @@
 import {createModel} from "@rematch/core";
 import {RootModel} from "./index";
-import {AuthState, LoginCredentials, RegisterCredentials} from "../types/auth";
-import {UserProperties} from "../types/users";
+import {AuthState, RegisterCredentials} from "../types/auth";
+import {UserProperties, UserType} from "../types/users";
 
 export type PasswordResetParameters = {
     email: string,
@@ -13,8 +13,11 @@ export type PasswordResetParameters = {
 export const auth = createModel<RootModel>()({
     state: {} as AuthState,
     reducers: {
-        setUser: (state, payload: Partial<UserProperties>) => {
+        setUser: (state, payload: Partial<UserProperties> | boolean) => {
             return {me: payload} as AuthState;
+        },
+        setGuest: (state, payload: boolean) => {
+            return {guest: true} as AuthState;
         },
         setFailed: (state, payload: boolean) => {
             return {failed: payload} as AuthState;
@@ -23,14 +26,18 @@ export const auth = createModel<RootModel>()({
 
     effects: (dispatch) => ({
         async csrf(): Promise<void> {
-            await window.axios.get('/sanctum/csrf-cookie');
+            await window.axios.get('/sanctum/csrf-cookie', {
+                headers: {Accept: 'application/javascript'}
+            });
         },
 
         async me(): Promise<UserProperties> {
             await dispatch.auth.csrf();
-            const response = await window.axios.get('/api/me');
+            const response = await window.axios.get('/api/users/me', {
+                headers: {Accept: 'application/javascript'}
+            });
 
-            const user = response.data.user;
+            const user = response.data;
 
             if (user) {
                 dispatch.auth.setUser(user as UserProperties);
@@ -83,9 +90,11 @@ export const auth = createModel<RootModel>()({
             }
         },
 
-        async login(payload: LoginCredentials): Promise<void> {
-            const {email, password} = payload;
+        async loginAsGuest(payload: UserType): Promise<void> {
+            dispatch.auth.setGuest(true);
+        },
 
+        async login(payload: UserType): Promise<void> {
             await dispatch.auth.csrf();
             const me = await dispatch.auth.me();
 
@@ -94,15 +103,15 @@ export const auth = createModel<RootModel>()({
             }
 
             try {
-                await window.axios.post('/login', {
-                    email, password,
+                await window.axios.post(`/api/users/login/${payload.id}`, [], {
+                    headers: {Accept: 'application/javascript'}
                 });
 
                 await dispatch.auth.me();
             } catch (e) {
                 dispatch.auth.setFailed(true);
                 // TODO: maybe pass API message
-                throw Error('Login failed');
+                throw e;
             }
         }
     })

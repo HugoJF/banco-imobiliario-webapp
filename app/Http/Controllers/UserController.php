@@ -18,6 +18,13 @@ class UserController extends Controller
         return $user;
     }
 
+    public function login(User $user)
+    {
+        auth()->login($user);
+
+        return response()->noContent();
+    }
+
     public function me()
     {
         return auth()->user();
