@@ -1,6 +1,6 @@
 import {UserType} from "./types/users";
 
-export type Id = string|number;
+export type Id = string | number;
 
 export type Resource<T> = {
     data: T;
@@ -16,9 +16,25 @@ export type SoftDeletes = {
 }
 
 // TODO: move
-export type MatchType = Timestamps & {
-    id: string; // FIXME: number or string?
-    rounds: number;
+export type MatchType = MatchProperties &
+    MatchComputedProperties &
+    MatchRelationships &
+    MatchDates &
+    Timestamps;
+
+export type MatchRelationships = {
     users: UserType[];
-    started_at: string|null;
+}
+
+export type MatchProperties = {
+    starting_money: number;
+}
+
+export type MatchComputedProperties = {
+    id: Id;
+    turn: number;
+}
+
+export type MatchDates = {
+    started_at: string | null;
 }

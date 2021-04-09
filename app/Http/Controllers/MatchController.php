@@ -16,9 +16,7 @@ class MatchController extends Controller
 
     public function show(Match $match)
     {
-        $match->loadMissing(['users']);
-        
-        return $match;
+        return $match->loadMissing(['users']);
     }
 
     public function search(MatchService $service)
@@ -48,9 +46,9 @@ class MatchController extends Controller
         return response()->json($match)->setStatusCode(201);
     }
 
-    public function create(MatchService $service)
+    public function store(Request $request, MatchService $service)
     {
-        return $service->create();
+        return $service->create($request->only('starting_money'));
     }
 
     public function start(MatchService $service, Match $match)

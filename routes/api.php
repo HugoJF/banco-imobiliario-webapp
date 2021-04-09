@@ -53,7 +53,7 @@ Route::prefix('matches')->group(function () {
     Route::get('{match}/balances', [\App\Http\Controllers\MatchController::class, 'balances'])->name('matches.balances');
     Route::get('{match}/transactions', [\App\Http\Controllers\MatchController::class, 'transactions'])->name('matches.transactions');
 
-    Route::post('create', [\App\Http\Controllers\MatchController::class, 'create'])->name('matches.create');
+    Route::post('/', [\App\Http\Controllers\MatchController::class, 'store'])->name('matches.store');
     Route::post('{match}/join', [\App\Http\Controllers\MatchController::class, 'join'])->name('matches.join');
     Route::post('{match}/transaction', [\App\Http\Controllers\MatchController::class, 'transaction'])->name('matches.transaction');
 

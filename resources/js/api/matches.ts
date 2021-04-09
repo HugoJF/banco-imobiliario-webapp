@@ -1,5 +1,5 @@
 import {bxios} from "../bxios";
-import {Id, MatchType} from "../types";
+import {Id, MatchProperties, MatchType} from "../types";
 
 export const matches = {
     index: () => bxios()
@@ -7,5 +7,9 @@ export const matches = {
         .send<MatchType[]>(), // FIXME: resource,
     show: (id: Id) => bxios()
         .get('matches', id)
+        .send<MatchType>(),
+    store: (data: MatchProperties) => bxios()
+        .post('matches')
+        .body(data)
         .send<MatchType>(),
 };

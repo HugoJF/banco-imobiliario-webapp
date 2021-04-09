@@ -8,9 +8,9 @@ use App\Exceptions\AlreadyInMatchException;
 use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\JoinedMultipleMatchesException;
 use App\Exceptions\MatchAlreadyStartedException;
-use App\Match;
-use App\Transaction;
-use App\User;
+use App\Models\Match;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class MatchService
@@ -48,11 +48,11 @@ class MatchService
         return $matches->first();
     }
 
-    public function create()
+    public function create(array $data)
     {
-        $match = new Match();
-        $match->starting_money = 100000; // TODO: improve this
-        $match->save();
+        $match = new Match;
+
+        $match->fill($data)->save();
 
         return $match;
     }

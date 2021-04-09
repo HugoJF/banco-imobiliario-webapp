@@ -1,15 +1,24 @@
 import React from 'react';
-import {Activity, Clock, Users} from "react-feather";
+import {Activity, Clock, DollarSign, Users} from "react-feather";
 import {MatchType} from "../types";
 import {Stat} from "./ui/Stat";
 import {HorizontalButton} from "./ui/HorizontalButton";
+import {formatDistanceToNow, parseISO} from "date-fns";
+import {formatNumber} from "./helpers/helpers";
 
 export type MatchListItemProps = {
     match: MatchType;
+    onClick?: (match: MatchType) => void;
 }
 
-export const MatchListItem: React.FC<MatchListItemProps> = ({match}) => {
-    return <HorizontalButton locked={Boolean(match.started_at)}>
+export const MatchListItem: React.FC<MatchListItemProps> = ({match, onClick}) => {
+    const createdAt = parseISO(match.created_at);
+    const interval = formatDistanceToNow(createdAt, {addSuffix: true});
+
+    return <HorizontalButton
+        locked={Boolean(match.started_at)}
+        onClick={() => onClick && onClick(match)}
+    >
         {/* Match ID */}
         <h2 className="text-3xl text-black font-bold tracking-tight">
             #{match.id}
@@ -22,12 +31,17 @@ export const MatchListItem: React.FC<MatchListItemProps> = ({match}) => {
 
         {/* Match rounds */}
         <Stat icon={Activity}>
-            {match.rounds}
+            {match.turn}
         </Stat>
 
-        {/* Match duration FIXME: parse */}
+        {/* Initial money */}
+        <Stat icon={DollarSign}>
+            {formatNumber(match.starting_money).join('')}
+        </Stat>
+
+        {/* Match duration */}
         <Stat icon={Clock}>
-            {match.created_at}
+            {interval}
         </Stat>
     </HorizontalButton>
 };

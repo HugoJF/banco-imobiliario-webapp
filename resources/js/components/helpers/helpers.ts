@@ -1,6 +1,6 @@
 const suffixes = ['', 'k', 'M', 'B'];
 
-export function formatNumber (value: number) {
+export function formatNumber(value: number) {
     let index = 0;
 
     while (value > 1000 && index < suffixes.length) {
@@ -11,3 +11,8 @@ export function formatNumber (value: number) {
 
     return [value, suffixes[index]];
 }
+
+export function clamp(value: number, min: number, max: number) {
+    return Math.max(Math.min(value, max), min);
+}
+
