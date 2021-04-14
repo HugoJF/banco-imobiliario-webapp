@@ -13,7 +13,7 @@ export type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
 }
 
 const classes: { [id in ButtonColors]: (params: ButtonProps) => string } = {
-    primary: () => 'bg-gray-800 hover:bg-gray-900 text-gray-100',
+    primary: () => 'bg-gray-900 hover:bg-gray-800 text-gray-100',
     default: () => 'bg-gray-200 hover:bg-gray-300 text-gray-900',
 };
 

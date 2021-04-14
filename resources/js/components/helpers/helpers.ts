@@ -1,5 +1,13 @@
 const suffixes = ['', 'k', 'M', 'B'];
 
+export function E(exp: number) {
+    return 10 ** exp;
+}
+
+export function round(value: number, precision: number) {
+    return Math.round(value * E(precision)) / E(precision);
+}
+
 export function formatNumber(value: number) {
     let index = 0;
 
@@ -9,7 +17,7 @@ export function formatNumber(value: number) {
     }
 
 
-    return [value, suffixes[index]];
+    return [round(value, 2), suffixes[index]];
 }
 
 export function clamp(value: number, min: number, max: number) {

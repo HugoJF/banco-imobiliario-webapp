@@ -55,6 +55,7 @@ Route::prefix('matches')->group(function () {
 
     Route::post('/', [\App\Http\Controllers\MatchController::class, 'store'])->name('matches.store');
     Route::post('{match}/join', [\App\Http\Controllers\MatchController::class, 'join'])->name('matches.join');
+    Route::post('{match}/leave', [\App\Http\Controllers\MatchController::class, 'leave'])->name('matches.leave');
     Route::post('{match}/transaction', [\App\Http\Controllers\MatchController::class, 'transaction'])->name('matches.transaction');
 
     Route::patch('{match}', [\App\Http\Controllers\MatchController::class, 'update'])->name('matches.update');
@@ -62,5 +63,6 @@ Route::prefix('matches')->group(function () {
     Route::patch('{match}/end', [\App\Http\Controllers\MatchController::class, 'end'])->name('matches.end');
     Route::patch('{match}/next', [\App\Http\Controllers\MatchController::class, 'next'])->name('matches.next');
 
-    Route::delete('leave', [\App\Http\Controllers\MatchController::class, 'leave'])->name('matches.leave');
+    Route::delete('{match}/leave', [\App\Http\Controllers\MatchController::class, 'leave'])->name('matches.leave');
+    Route::delete('leave', [\App\Http\Controllers\MatchController::class, 'leaveAll'])->name('matches.leave-all');
 });

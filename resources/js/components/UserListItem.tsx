@@ -8,12 +8,13 @@ export type UserListItemProps = {
     clickable?: boolean;
     onClick?: (user: UserType) => void;
     user: UserType;
+    children?: (user: UserType) => JSX.Element
 }
 
-export const UserListItem: React.FC<UserListItemProps> = ({clickable, onClick, user}) => {
+export const UserListItem: React.FC<UserListItemProps> = ({clickable, onClick, user, children}) => {
     return <HorizontalButton onClick={() => onClick && onClick(user)} clickable={clickable}>
         {/* User name */}
-        <h2 className="text-3xl text-black font-bold tracking-tight">
+        <h2 className="text-xl text-black font-bold tracking-tight">
             {user.name}
         </h2>
 
@@ -21,5 +22,7 @@ export const UserListItem: React.FC<UserListItemProps> = ({clickable, onClick, u
         <Stat icon={Activity}>
             {user.match_count}
         </Stat>
+
+        {children && children(user)}
     </HorizontalButton>
 };

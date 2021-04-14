@@ -12,9 +12,7 @@ module.exports = {
             fontSize: {},
             spacing: {},
             boxShadow: {},
-            colors: {
-                "black": "#24292E",
-            }
+            colors: {}
         },
     },
     plugins: [],

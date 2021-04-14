@@ -14,18 +14,18 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&subset=latin"
-          rel="stylesheet"
-          type="text/css">
+    <link
+        href="//fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900&subset=latin"
+        rel="stylesheet"
+        type="text/css"
+    >
 
     <!-- Styles -->
     <link href="{{ mix('css/tailwind.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="min-h-screen bg-gray-100 text-black" id="app">
-    <main>
-        @yield('content')
-    </main>
+    @yield('content')
 </div>
 </body>
 </html>

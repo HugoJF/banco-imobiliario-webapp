@@ -84,7 +84,7 @@ export const auth = createModel<RootModel>()({
             try {
                 await window.axios.post('/logout');
 
-                dispatch.auth.setUser({});
+                dispatch.auth.setUser(false);
             } catch (e) {
                 dispatch.auth.setFailed(true);
             }

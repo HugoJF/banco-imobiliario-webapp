@@ -80,10 +80,17 @@ class MatchController extends Controller
         return $service->update($match, $request->all());
     }
 
-    public function leave(MatchService $service)
+    public function leave(MatchService $service, Match $match)
+    {
+        $service->leave(auth()->user(), $match);
+
+        return response()->noContent(200);
+    }
+
+    public function leaveAll(MatchService $service)
     {
         $service->leaveAll(auth()->user());
 
-        return 'OK';
+        return response()->noContent(200);
     }
 }

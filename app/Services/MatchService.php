@@ -33,7 +33,7 @@ class MatchService
             throw new AlreadyInMatchException;
         }
 
-        $match->users()->attach($user);
+        $match->users()->syncWithoutDetaching([$user->id]);
         event(new PlayerJoined($user, $match));
     }
 
@@ -129,6 +129,15 @@ class MatchService
     {
         $match->ended_at = now();
         $match->save();
+    }
+
+    public function leave(User $user, Match $match)
+    {
+        $user->matches()->detach($match);
+
+        event(new PlayerLeft($user, $match));
+
+        return $match;
     }
 
     public function leaveAll(User $user)

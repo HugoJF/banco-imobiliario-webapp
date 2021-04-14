@@ -1,5 +1,6 @@
 import React from 'react';
 import {ChevronRight, Lock} from "react-feather";
+import clsx from "clsx";
 
 export type HorizontalButtonProps = {
     clickable?: boolean;
@@ -9,8 +10,11 @@ export type HorizontalButtonProps = {
 
 export const HorizontalButton: React.FC<HorizontalButtonProps> = ({clickable = true, onClick, locked = false, children}) => {
     return <div
-        onClick={() => onClick && clickable && onClick()}
-        className="duration-150 p-4 flex items-center space-x-6 bg-gray-300 cursor-pointer hover:shadow"
+        onClick={() => !locked && onClick && clickable && onClick()}
+        className={clsx(`duration-150 p-4 flex items-center space-x-6 bg-gray-300`, {
+            'cursor-pointer hover:shadow': !locked,
+            'opacity-25': locked,
+        })}
     >
         <div className="flex-grow flex items-center space-x-6">
             {children}

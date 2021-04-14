@@ -1,5 +1,5 @@
 @extends('layouts.blank')
 
 @section('content')
-    <div class="px-4 pt-4 container mx-auto" id="container"></div>
+    <div id="container"></div>
 @endsection
