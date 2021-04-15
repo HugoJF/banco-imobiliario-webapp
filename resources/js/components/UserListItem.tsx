@@ -12,7 +12,10 @@ export type UserListItemProps = {
 }
 
 export const UserListItem: React.FC<UserListItemProps> = ({clickable, onClick, user, children}) => {
-    return <HorizontalButton onClick={() => onClick && onClick(user)} clickable={clickable}>
+    return <HorizontalButton
+        onClick={() => onClick && onClick(user)}
+        clickable={clickable}
+    >
         {/* User name */}
         <h2 className="text-xl text-black font-bold tracking-tight">
             {user.name}

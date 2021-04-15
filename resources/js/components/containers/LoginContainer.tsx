@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Title} from "../ui/Title";
 import {UserList} from "../UserList";
 import {Button} from "../ui/Button";
@@ -13,9 +13,10 @@ import {useIsAuthed} from "../../hooks/useIsAuthed";
 
 export const LoginContainer: React.FC = () => {
     const authed = useIsAuthed();
+    const [authing, setAuthing] = useState(false);
     const dispatch = useDispatch<Dispatch>();
     const history = useHistory();
-    const {status, data, error, isFetching} = useUsers();
+    const users = useUsers();
 
     useEffect(() => {
         if (authed) {
@@ -24,12 +25,13 @@ export const LoginContainer: React.FC = () => {
     }, [authed]);
 
     async function handleOnClick(user: UserType) {
+        setAuthing(true);
         await dispatch.auth.login(user);
 
         history.push('/home');
     }
 
-    if (!data) {
+    if (!users.data) {
         return <Loader/>;
     }
 
@@ -38,7 +40,8 @@ export const LoginContainer: React.FC = () => {
 
         <UserList
             onClick={handleOnClick}
-            users={data.data.data}
+            users={users.data.data.data}
+            loading={users.isFetching || authing}
         />
 
         <ButtonGroup>
