@@ -1,6 +1,7 @@
 import React from "react";
 
 export enum ToastTypes {
+    PRIMARY = 'PRIMARY',
     SUCCESS = 'SUCCESS',
     ERROR = 'ERROR',
     WARNING = 'WARNING',

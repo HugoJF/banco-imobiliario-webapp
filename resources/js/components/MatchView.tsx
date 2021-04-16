@@ -12,12 +12,16 @@ import {useMatchLeave} from "../mutations/useMatchLeave";
 import {Activity} from "react-feather";
 import {useMatchNext} from "../mutations/useMatchNext";
 import {useHistory} from "react-router";
+import {useDispatch} from "react-redux";
+import {Dispatch} from "../store";
+import {ToastTypes} from "../types/toasts";
 
 export type MatchViewType = {
     match: MatchType;
 }
 
 export const MatchView: React.FC<MatchViewType> = ({match}) => {
+    const dispatch = useDispatch<Dispatch>();
     const history = useHistory();
     const auth = useAuth();
     const joinMatch = useMatchJoin();
@@ -28,6 +32,11 @@ export const MatchView: React.FC<MatchViewType> = ({match}) => {
 
     async function handleOnMatchJoin() {
         await joinMatch.mutateAsync(match.id);
+        dispatch.toasts.add({
+            title: 'Entrou na partida',
+            description: `Você acabou de entrar na partida ${match.id}!`,
+            type: ToastTypes.PRIMARY,
+        })
     }
 
     async function handleOnMatchLeave() {
