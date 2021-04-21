@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
+use App\Http\Resources\MatchResource;
 use App\Models\Match;
 use App\Services\MatchService;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class MatchController extends Controller
 
     public function show(Match $match)
     {
-        return $match->loadMissing(['users']);
+        return new MatchResource($match->loadMissing(['users']));
     }
 
     public function search(MatchService $service)

@@ -5,6 +5,7 @@ import {UserList} from "../UserList";
 import {UserType} from "../../types/users";
 import {DollarSign} from "react-feather";
 import {formatNumber} from "../helpers/helpers";
+import {Stat} from "../ui/Stat";
 
 type Props = {
     match: MatchType;
@@ -19,10 +20,9 @@ export const MatchBalances: React.FC<Props> = ({match, balances}) => {
             users={match.users}
             clickable={false}
         >
-            {(user: UserType) => <>
-                <DollarSign/>
+            {(user: UserType) => <Stat icon={DollarSign}>
                 {formatNumber(balances[String(user.id)]).join('')}
-            </>}
+            </Stat>}
         </UserList>
     </div>
 };

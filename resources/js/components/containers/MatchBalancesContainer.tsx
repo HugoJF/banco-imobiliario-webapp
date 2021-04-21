@@ -17,7 +17,7 @@ export const MatchBalancesContainer: React.FC = () => {
     }
 
     return <MatchBalances
-        match={match.data.data}
+        match={match.data.data.data}
         balances={balances.data.data}
     />
 };

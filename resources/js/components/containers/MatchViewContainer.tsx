@@ -13,6 +13,6 @@ export const MatchViewContainer: React.FC = () => {
     }
 
     return <MatchView
-        match={data.data}
+        match={data.data.data}
     />
 };

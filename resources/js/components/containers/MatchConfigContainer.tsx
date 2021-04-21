@@ -14,6 +14,6 @@ export const MatchConfigContainer: React.FC = () => {
     }
 
     return <MatchConfig
-        match={data.data}
+        match={data.data.data}
     />
 };
