@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
 import {Route, Switch} from "react-router";
 import {AuthedRoute} from "../components/containers/AuthedRoute";
@@ -11,13 +11,22 @@ import {Dispatch} from "../store";
 import {MatchCreateContainer} from "../components/containers/MatchCreationContainer";
 import {HeaderContainer} from "../components/containers/HeaderContainer";
 import {MatchBalancesContainer} from "../components/containers/MatchBalancesContainer";
+import {PageLoader} from "../components/containers/PageLoader";
 
 export const Root = () => {
+    const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch<Dispatch>();
 
     useEffect(() => {
-        dispatch.auth.me();
+        (async () => {
+            await dispatch.auth.me();
+            setLoaded(true);
+        })()
     }, []);
+
+    if (!loaded) {
+        return <PageLoader loading={true}/>
+    }
 
     return <>
         <HeaderContainer/>

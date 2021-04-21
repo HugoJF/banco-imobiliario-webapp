@@ -33,7 +33,7 @@ export const HeaderContainer: React.FC = () => {
             {/* Left side */}
             <ChevronLeft className="cursor-pointer" onClick={handleOnBack}/>
 
-            {/* Middle */}gg
+            {/* Middle */}
             <div className="flex items-center space-x-4">
                 <User/>
                 <span>{auth?.me?.name}</span>
