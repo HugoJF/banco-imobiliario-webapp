@@ -6,4 +6,7 @@ export const users = {
     index: () => bxios()
         .get('users')
         .send<Resource<UserType[]>>(),
+    register: () => bxios()
+        .post('users')
+        .send<Resource<UserType>>()
 };

@@ -2,6 +2,7 @@ import {createModel} from "@rematch/core";
 import {RootModel} from "./index";
 import {AuthState, RegisterCredentials} from "../types/auth";
 import {UserProperties, UserType} from "../types/users";
+import {AxiosError} from "axios";
 
 export type PasswordResetParameters = {
     email: string,
@@ -49,6 +50,12 @@ export const auth = createModel<RootModel>()({
         async registration(payload: RegisterCredentials): Promise<void> {
             const {name, email, password, password_confirmation} = payload;
 
+            window.axios.get<number, string>('asd').then(v => {
+
+            }).catch((e: AxiosError) => {
+
+            })
+
             return await window.axios.post('/register', {
                 name, email, password, password_confirmation,
             });
@@ -94,7 +101,7 @@ export const auth = createModel<RootModel>()({
             dispatch.auth.setGuest(true);
         },
 
-        async login(payload: UserType): Promise<void> {
+        async login(id: number): Promise<void> {
             await dispatch.auth.csrf();
             const me = await dispatch.auth.me();
 
@@ -103,7 +110,7 @@ export const auth = createModel<RootModel>()({
             }
 
             try {
-                await window.axios.post(`/api/users/login/${payload.id}`, [], {
+                await window.axios.post(`/api/users/login/${id}`, [], {
                     headers: {Accept: 'application/javascript'}
                 });
 

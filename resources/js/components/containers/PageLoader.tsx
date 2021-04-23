@@ -14,7 +14,7 @@ export const PageLoader: React.FC<UserListProps> = ({loading = false, containerC
             'opacity-0': !loading,
             'h-full opacity-100': loading,
         })}>
-            <Loader className="animate-spin" size={48}/>
+            {loading && <Loader className="animate-spin" size={48}/>}
         </div>
 
         <div

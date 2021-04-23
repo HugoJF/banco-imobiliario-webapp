@@ -10,9 +10,9 @@
     "require": {
         "php": "^7.3",
         "fideloper/proxy": "^4.0",
+        "laravel/fortify": "^1.7",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0",
         "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {

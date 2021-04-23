@@ -26,7 +26,7 @@ export const LoginContainer: React.FC = () => {
 
     async function handleOnClick(user: UserType) {
         setAuthing(true);
-        await dispatch.auth.login(user);
+        await dispatch.auth.login(user.id);
 
         history.push('/home');
     }
@@ -45,7 +45,7 @@ export const LoginContainer: React.FC = () => {
         />
 
         <ButtonGroup>
-            <Button icon={Plus}>Registrar</Button>
+            <Button onClick={() => history.push('/register')} icon={Plus}>Registrar</Button>
             <Button color="default">Entrar como espectador</Button>
         </ButtonGroup>
     </div>

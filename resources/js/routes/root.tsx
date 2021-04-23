@@ -12,6 +12,7 @@ import {MatchCreateContainer} from "../components/containers/MatchCreationContai
 import {HeaderContainer} from "../components/containers/HeaderContainer";
 import {MatchBalancesContainer} from "../components/containers/MatchBalancesContainer";
 import {PageLoader} from "../components/containers/PageLoader";
+import {UserRegistrationContainer} from "../components/containers/UserRegistrationContainer";
 
 export const Root = () => {
     const [loaded, setLoaded] = useState(false);
@@ -34,6 +35,7 @@ export const Root = () => {
             <Switch>
                 <Redirect exact path="/" to="/login"/>
                 <Route path="/login" children={<LoginContainer/>}/>
+                <Route path="/register" children={<UserRegistrationContainer/>}/>
 
                 <Redirect path="/home" to="/matches"/>
                 <AuthedRoute path="/matches/create" children={<MatchCreateContainer/>}/>
