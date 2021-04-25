@@ -3,16 +3,17 @@ import {ChevronRight, Loader, Lock} from "react-feather";
 import clsx from "clsx";
 
 export type HorizontalButtonProps = {
+    className?: string;
     clickable?: boolean;
     onClick?: () => void;
     locked?: boolean;
     loading?: boolean;
 }
 
-export const HorizontalButton: React.FC<HorizontalButtonProps> = ({clickable = true, onClick, locked = false, loading = false, children}) => {
+export const HorizontalButton: React.FC<HorizontalButtonProps> = ({clickable = true, onClick, locked = false, loading = false, className, children}) => {
     return <div
         onClick={() => !locked && onClick && clickable && onClick()}
-        className={clsx(`duration-150 p-4 relative flex items-center space-x-6 bg-gray-300`, {
+        className={clsx(className, `duration-150 p-4 relative flex items-center space-x-6 bg-gray-300`, {
             'cursor-pointer hover:shadow': !locked,
             'opacity-25': locked || loading,
         })}

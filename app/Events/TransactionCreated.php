@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Transaction;
+use App\Models\Transaction;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;

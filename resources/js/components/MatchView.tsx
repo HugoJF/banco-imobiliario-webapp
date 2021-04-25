@@ -84,7 +84,7 @@ export const MatchView: React.FC<MatchViewType> = ({match}) => {
 
         {inMatch && <div className="space-y-2">
             <Title sub>Ações</Title>
-            <HorizontalButton>
+            <HorizontalButton onClick={() => history.push(`/match/${match.id}/payments`)}>
                 <h2 className="text-xl text-black font-bold tracking-tight">
                     Pagar
                 </h2>

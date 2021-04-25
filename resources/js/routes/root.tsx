@@ -13,6 +13,7 @@ import {HeaderContainer} from "../components/containers/HeaderContainer";
 import {MatchBalancesContainer} from "../components/containers/MatchBalancesContainer";
 import {PageLoader} from "../components/containers/PageLoader";
 import {UserRegistrationContainer} from "../components/containers/UserRegistrationContainer";
+import {MatchPaymentsContainer} from "../components/containers/MatchPaymentsContainer";
 
 export const Root = () => {
     const [loaded, setLoaded] = useState(false);
@@ -42,6 +43,7 @@ export const Root = () => {
                 <AuthedRoute path="/matches" children={<MatchSelectionContainer/>}/>
                 <AuthedRoute path="/match/:id/config" children={<MatchConfigContainer/>}/>
                 <AuthedRoute path="/match/:id/balances" children={<MatchBalancesContainer/>}/>
+                <AuthedRoute path="/match/:id/payments" children={<MatchPaymentsContainer/>}/>
                 <AuthedRoute path="/match/:id" children={<MatchViewContainer/>}/>
 
                 <Redirect to="/home"/>

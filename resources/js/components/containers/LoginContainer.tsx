@@ -24,7 +24,11 @@ export const LoginContainer: React.FC = () => {
         }
     }, [authed]);
 
-    async function handleOnClick(user: UserType) {
+    async function handleOnClick(user: null|UserType) {
+        if (!user) {
+            return;
+        }
+
         setAuthing(true);
         await dispatch.auth.login(user.id);
 

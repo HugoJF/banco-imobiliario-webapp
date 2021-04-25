@@ -2,9 +2,9 @@
 
 namespace App\Events;
 
-use App\Match;
+use App\Models\Match;
 use App\Services\MatchService;
-use App\Transaction;
+use App\Models\Transaction;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;

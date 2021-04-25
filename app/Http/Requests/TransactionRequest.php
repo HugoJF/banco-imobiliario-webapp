@@ -16,6 +16,7 @@ class TransactionRequest extends FormRequest
         return [
             'origin_id'      => 'nullable|numeric|exists:users,id',
             'destination_id' => 'nullable|numeric|exists:users,id',
+            'value'          => 'required|numeric',
         ];
     }
 }

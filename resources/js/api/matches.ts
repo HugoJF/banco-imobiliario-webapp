@@ -1,5 +1,6 @@
 import {bxios} from "../bxios";
 import {Id, MatchProperties, MatchType, Resource} from "../types";
+import {TransactionRequest} from "../types/match";
 
 export const matches = {
     index: () => bxios()
@@ -25,6 +26,10 @@ export const matches = {
         .send(),
     store: (data: MatchProperties) => bxios()
         .post('matches')
+        .body(data)
+        .send<MatchType>(),
+    transaction: (id: Id, data: TransactionRequest) => bxios()
+        .post('matches', id, 'transaction')
         .body(data)
         .send<MatchType>(),
 };
