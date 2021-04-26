@@ -1,6 +1,7 @@
 import {bxios} from "../bxios";
-import {Id, MatchProperties, MatchType, Resource} from "../types";
+import {Id, MatchProperties, MatchType, PaginatedResource, Resource} from "../types";
 import {TransactionRequest} from "../types/match";
+import {TransactionType} from "../types/transactions";
 
 export const matches = {
     index: () => bxios()
@@ -9,6 +10,10 @@ export const matches = {
     show: (id: Id) => bxios()
         .get('matches', id)
         .send<Resource<MatchType>>(),
+    transactions: (id: Id, page: number = 1) => bxios()
+        .get('matches', id, 'transactions')
+        .setCustom({params: {page}})
+        .send<PaginatedResource<TransactionType[]>>(),
     balances: (id: Id) => bxios()
         .get('matches', id, 'balances')
         .send<{[id: string]: number}>(),

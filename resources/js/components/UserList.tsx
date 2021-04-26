@@ -4,14 +4,12 @@ import {UserType} from "../types/users";
 import {HorizontalButton} from "./ui/HorizontalButton";
 import {PageLoader} from "./containers/PageLoader";
 import clsx from "clsx";
-import {Stat} from "./ui/Stat";
-import {Activity} from "react-feather";
 
 export type UserListProps = {
     selected?: number;
     bank?: boolean;
     clickable?: boolean;
-    onClick?: (user: null|UserType) => void;
+    onClick?: (user: null | UserType) => void;
     users: UserType[];
     children?: (user: UserType) => JSX.Element
     loading?: boolean;
@@ -27,7 +25,7 @@ export const UserList: React.FC<UserListProps> = ({selected, clickable = true, l
         </HorizontalButton>}
 
         {/* Bank */}
-        <HorizontalButton
+        {bank && <HorizontalButton
             onClick={() => onClick && onClick(null)}
             clickable={clickable}
             className={clsx({
@@ -38,7 +36,7 @@ export const UserList: React.FC<UserListProps> = ({selected, clickable = true, l
             <h2 className="text-xl text-black font-bold tracking-tight">
                 Banco
             </h2>
-        </HorizontalButton>
+        </HorizontalButton>}
 
         {/* Actual users */}
         {users.map(user => <UserListItem

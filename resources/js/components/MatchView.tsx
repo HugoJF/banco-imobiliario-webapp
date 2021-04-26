@@ -95,6 +95,12 @@ export const MatchView: React.FC<MatchViewType> = ({match}) => {
                     Saldos
                 </h2>
             </HorizontalButton>
+
+            <HorizontalButton onClick={() => history.push(`/match/${match.id}/transactions`)}>
+                <h2 className="text-xl text-black font-bold tracking-tight">
+                    Transações
+                </h2>
+            </HorizontalButton>
         </div>}
 
         {inMatch && <ButtonGroup>

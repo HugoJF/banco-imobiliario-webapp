@@ -23,7 +23,7 @@ export const MatchPayments: React.FC<MatchConfigProps> = ({match, balances}) => 
     const [to, setTo] = useState<null|number>(null);
     const transaction = useMatchTransaction(match.id);
 
-    function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleOnValueChange(e: React.ChangeEvent<HTMLInputElement>) {
         const current = parseInt(e.target.value.replace(/\./g, ''));
 
         setValue(clamp(current || 0, 0, Infinity));
@@ -50,7 +50,12 @@ export const MatchPayments: React.FC<MatchConfigProps> = ({match, balances}) => 
 
         {/* From */}
         <Title sub>Origem</Title>
-        <UserList onClick={handleFromChange} selected={from ?? undefined} users={match.users}>
+        <UserList
+            users={match.users}
+            selected={from ?? undefined}
+            onClick={handleFromChange}
+            bank
+        >
             {(user: UserType) => <Stat icon={DollarSign}>
                 {formatNumber(balances[String(user.id)]).join('')}
             </Stat>}
@@ -58,7 +63,12 @@ export const MatchPayments: React.FC<MatchConfigProps> = ({match, balances}) => 
 
         {/* To */}
         <Title sub>Destino</Title>
-        <UserList onClick={handleToChange} selected={to ?? undefined} users={match.users}>
+        <UserList
+            users={match.users}
+            selected={to ?? undefined}
+            onClick={handleToChange}
+            bank
+        >
             {(user: UserType) => <Stat icon={DollarSign}>
                 {formatNumber(balances[String(user.id)]).join('')}
             </Stat>}
@@ -74,17 +84,18 @@ export const MatchPayments: React.FC<MatchConfigProps> = ({match, balances}) => 
 
             {/* User input */}
             <input
-                id="starting_money"
+                id="value"
+                name="value"
                 className="py-2 px-4 flex-grow bg-transparent text-lg border-black border-b-2"
                 type="text"
-                onChange={handleOnChange}
+                onChange={handleOnValueChange}
                 value={format.format(value)}
             />
         </div>
 
         {/* Submit */}
         <ButtonGroup>
-            <Button onClick={handleOnSubmit}>Enviar</Button>
+            <Button loading={transaction.isLoading} onClick={handleOnSubmit}>Enviar</Button>
         </ButtonGroup>
     </div>
 };

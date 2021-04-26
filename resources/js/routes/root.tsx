@@ -14,6 +14,7 @@ import {MatchBalancesContainer} from "../components/containers/MatchBalancesCont
 import {PageLoader} from "../components/containers/PageLoader";
 import {UserRegistrationContainer} from "../components/containers/UserRegistrationContainer";
 import {MatchPaymentsContainer} from "../components/containers/MatchPaymentsContainer";
+import {MatchTransactionsContainer} from "../components/containers/MatchTransactionsContainer";
 
 export const Root = () => {
     const [loaded, setLoaded] = useState(false);
@@ -44,6 +45,7 @@ export const Root = () => {
                 <AuthedRoute path="/match/:id/config" children={<MatchConfigContainer/>}/>
                 <AuthedRoute path="/match/:id/balances" children={<MatchBalancesContainer/>}/>
                 <AuthedRoute path="/match/:id/payments" children={<MatchPaymentsContainer/>}/>
+                <AuthedRoute path="/match/:id/transactions" children={<MatchTransactionsContainer/>}/>
                 <AuthedRoute path="/match/:id" children={<MatchViewContainer/>}/>
 
                 <Redirect to="/home"/>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\Http\Resources\MatchResource;
+use App\Http\Resources\TransactionResource;
 use App\Models\Match;
 use App\Services\MatchService;
 use Illuminate\Http\Request;
@@ -37,7 +38,9 @@ class MatchController extends Controller
 
     public function transactions(Match $match)
     {
-        return $match->transactions;
+        return TransactionResource::collection(
+            $match->transactions()->with('origin', 'destination')->latest()->paginate(20),
+            );
     }
 
     public function join(MatchService $service, Match $match)
