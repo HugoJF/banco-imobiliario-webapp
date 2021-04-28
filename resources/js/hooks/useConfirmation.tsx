@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import {Title} from "../components/ui/Title";
 import {Button} from "../components/ui/Button";
-import {Modal} from "../components/Modal";
+import {Modal} from "../components/ui/Modal";
 
 type ModalConfig = {
     title: string|JSX.Element;

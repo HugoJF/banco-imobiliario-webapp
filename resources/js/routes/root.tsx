@@ -11,7 +11,7 @@ import {Dispatch} from "../store";
 import {MatchCreateContainer} from "../components/containers/MatchCreationContainer";
 import {HeaderContainer} from "../components/containers/HeaderContainer";
 import {MatchBalancesContainer} from "../components/containers/MatchBalancesContainer";
-import {PageLoader} from "../components/containers/PageLoader";
+import {PageLoader} from "../components/ui/PageLoader";
 import {UserRegistrationContainer} from "../components/containers/UserRegistrationContainer";
 import {MatchPaymentsContainer} from "../components/containers/MatchPaymentsContainer";
 import {MatchTransactionsContainer} from "../components/containers/MatchTransactionsContainer";

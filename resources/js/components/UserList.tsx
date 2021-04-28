@@ -2,7 +2,7 @@ import React from 'react';
 import {UserListItem} from "./UserListItem";
 import {UserType} from "../types/users";
 import {HorizontalButton} from "./ui/HorizontalButton";
-import {PageLoader} from "./containers/PageLoader";
+import {PageLoader} from "./ui/PageLoader";
 import clsx from "clsx";
 
 export type UserListProps = {

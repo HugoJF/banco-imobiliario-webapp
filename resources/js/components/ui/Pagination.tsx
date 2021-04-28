@@ -46,6 +46,7 @@ export const Pagination: React.FC<Props> = ({current, counts = 5, max, onPaginat
 
         {pages.map(page =>
             <div
+                key={page}
                 onClick={() => onPagination(page)}
                 className={clsx(
                     'duration-150 px-5 py-4 text-center', {

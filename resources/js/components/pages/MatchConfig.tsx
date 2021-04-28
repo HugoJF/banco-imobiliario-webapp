@@ -1,10 +1,10 @@
 import React from 'react';
-import {Title} from "./ui/Title";
-import {UserList} from "./UserList";
-import {Button} from "./ui/Button";
-import {ButtonGroup} from "./ui/ButtonGroup";
-import {UserType} from "../types/users";
-import {MatchType} from "../types";
+import {Title} from "../ui/Title";
+import {UserList} from "../UserList";
+import {Button} from "../ui/Button";
+import {ButtonGroup} from "../ui/ButtonGroup";
+import {UserType} from "../../types/users";
+import {MatchType} from "../../types";
 
 type MatchConfigProps = {
     match: MatchType;

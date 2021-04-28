@@ -1,9 +1,9 @@
 import React from 'react';
 import {useParams} from "react-router";
-import {MatchView} from "../MatchView";
+import {MatchView} from "../pages/MatchView";
 import {useMatch} from "../../queries/useMatch";
 import {Loader} from "react-feather";
-import {MatchConfig} from "../MatchConfig";
+import {MatchConfig} from "../pages/MatchConfig";
 
 export const MatchConfigContainer: React.FC = () => {
     const {id} = useParams<{ id: string }>();

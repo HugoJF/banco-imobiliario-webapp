@@ -1,20 +1,20 @@
 import React, {useMemo} from 'react';
-import {Title} from "./ui/Title";
-import {Button} from "./ui/Button";
-import {ButtonGroup} from "./ui/ButtonGroup";
-import {MatchType} from "../types";
-import {HorizontalButton} from "./ui/HorizontalButton";
-import {Error} from "./ui/Error";
-import {useAuth} from "../selectors";
-import {UserList} from "./UserList";
-import {useMatchJoin} from "../mutations/useMatchJoin";
-import {useMatchLeave} from "../mutations/useMatchLeave";
+import {Title} from "../ui/Title";
+import {Button} from "../ui/Button";
+import {ButtonGroup} from "../ui/ButtonGroup";
+import {MatchType} from "../../types";
+import {HorizontalButton} from "../ui/HorizontalButton";
+import {Error} from "../ui/Error";
+import {useAuth} from "../../selectors";
+import {UserList} from "../UserList";
+import {useMatchJoin} from "../../mutations/useMatchJoin";
+import {useMatchLeave} from "../../mutations/useMatchLeave";
 import {Activity} from "react-feather";
-import {useMatchNext} from "../mutations/useMatchNext";
+import {useMatchNext} from "../../mutations/useMatchNext";
 import {useHistory} from "react-router";
 import {useDispatch} from "react-redux";
-import {Dispatch} from "../store";
-import {ToastTypes} from "../types/toasts";
+import {Dispatch} from "../../store";
+import {ToastTypes} from "../../types/toasts";
 
 export type MatchViewType = {
     match: MatchType;

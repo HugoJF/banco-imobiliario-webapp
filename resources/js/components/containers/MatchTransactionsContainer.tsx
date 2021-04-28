@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from "react-router";
 import {Loader} from "react-feather";
-import {MatchTransactions} from "./MatchTransactions";
+import {MatchTransactions} from "../pages/MatchTransactions";
 import {useMatchTransactions} from "../../queries/useMatchTransactions";
 import usePagination from "../../hooks/usePagination";
 

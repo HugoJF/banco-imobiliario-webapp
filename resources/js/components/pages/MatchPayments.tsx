@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {Title} from "./ui/Title";
-import {UserList} from "./UserList";
-import {Button} from "./ui/Button";
-import {ButtonGroup} from "./ui/ButtonGroup";
-import {UserType} from "../types/users";
-import {MatchType} from "../types";
-import {clamp, formatNumber} from "./helpers/helpers";
-import {useMatchTransaction} from "../mutations/useMatchTransaction";
-import {Stat} from "./ui/Stat";
+import {Title} from "../ui/Title";
+import {UserList} from "../UserList";
+import {Button} from "../ui/Button";
+import {ButtonGroup} from "../ui/ButtonGroup";
+import {UserType} from "../../types/users";
+import {MatchType} from "../../types";
+import {clamp, formatNumber} from "../helpers/helpers";
+import {useMatchTransaction} from "../../mutations/useMatchTransaction";
+import {Stat} from "../ui/Stat";
 import {DollarSign} from "react-feather";
 
 type MatchConfigProps = {
