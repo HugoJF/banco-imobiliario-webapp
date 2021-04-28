@@ -7,16 +7,17 @@ import {Dispatch} from "../../store";
 import {useHistory} from "react-router";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {Toast} from "../ui/Toast";
+import useNavigation from "../../hooks/useNavigation";
 
 export const HeaderContainer: React.FC = () => {
-    const history = useHistory();
+    const navigation = useNavigation();
     const dispatch = useDispatch<Dispatch>();
     const auth = useAuth();
     const isAuthed = useIsAuthed();
     const toasts = useToasts();
 
     function handleOnBack() {
-        history.goBack();
+        navigation.goUp();
     }
 
     function handleOnLogout() {

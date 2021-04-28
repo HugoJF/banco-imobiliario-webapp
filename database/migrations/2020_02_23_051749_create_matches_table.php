@@ -18,7 +18,7 @@ class CreateMatchesTable extends Migration
 
             $table->unsignedInteger('starting_money');
 
-            $table->unsignedInteger('turn')->default(0);
+            $table->unsignedInteger('turn')->default(1);
 
             $table->timestamp('started_at')->nullable();
             $table->timestamp('ended_at')->nullable();

@@ -34,6 +34,11 @@ class MatchService
         }
 
         $match->users()->syncWithoutDetaching([$user->id]);
+        $this->createTransaction($match, [
+            'origin_id'      => null,
+            'destination_id' => $user->id,
+            'value'          => $match->starting_money,
+        ]);
         event(new PlayerJoined($user, $match));
     }
 
