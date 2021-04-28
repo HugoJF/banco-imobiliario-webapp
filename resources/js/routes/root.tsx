@@ -33,7 +33,7 @@ export const Root = () => {
 
     return <>
         <HeaderContainer/>
-        <main className="pt-4 mx-auto container">
+        <main className="pt-4 pb-8 relative mx-auto container">
             <Switch>
                 <Redirect exact path="/" to="/login"/>
                 <Route path="/login" children={<LoginContainer/>}/>
